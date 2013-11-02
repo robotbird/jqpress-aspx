@@ -1,0 +1,92 @@
+﻿    
+    <div id="comments">	
+			<h3>(${Model.post.commentcount})条评论 ${Model.post.feedlink} </h3>
+		<ol class="comment_list">
+         #foreach($item in $Model.comments)
+		    <li id="comment-comment-${item.commentid}" class="comment even thread-even depth-1">
+		    <div class="comment-body" id="div-comment-1">
+            <div class="comment-author vcard">
+            <img width="26" height="26" class="avatar avatar-26 photo avatar-default" 
+            src="http://www.gravatar.com/avatar/${item.gravatarcode}?size=26" alt="${item.nickname}">		
+            <cite class="fn">${item.authorlink}</cite> <span class="says">说：</span></div>
+    
+            <div class="comment-meta commentmetadata">${item.createtime.tostring("yyyy-MM-dd HH:mm")}</div>
+    
+            <p>   
+            #if($item.approved==1)
+                ${item.contents}
+             #else
+                  [待审核]
+             #end
+            </p>
+    
+            <div class="reply">
+               <a onclick="return PressComment.replyAuthor('${item.author}',${item.commentid})" href="javascript:void(0)" class="comment-reply-link">回复</a></div>
+            </div>
+            </li>
+          #end
+		</ol>
+        ${Model.pager}
+         #if(${Model.post.commentstatus}==1)
+			<div id="respond">
+				<h3 id="reply-title">发表评论 
+                <small>
+                    <a style="display:none;"  id="cancel-comment-reply-link" rel="nofollow">取消回复</a>
+                 </small>
+                </h3>
+        
+       
+        <form id="commentform" method="post" action="${Model.url}#addcomment">
+        <input type="hidden" id="ReplyToCommentId"  name="ReplyToCommentId"  value="0" />
+		<p class="comment-notes">电子邮件用于回复通知和<a href="http://www.gravatar.com/">avatar全球唯一头像</a>  <span class="required">*</span></p>
+        
+        <p class="comment-form-author"><label for="author">名称</label> <span class="required">*</span>
+        <input type="text" aria-required="true" size="30" name="commentauthor" id="commentauthor" >
+        </p>
+        
+        <p class="comment-form-email"><label for="email">电子邮件</label> <span class="required">*</span> 
+       <input type="text" aria-required="true" size="30" name="commentemail" id="commentemail" >
+        </p>
+        
+         <p class="comment-form-url"><label for="url">网站</label>
+         <input type="text" size="30"  name="commentsiteurl" id="commentsiteurl" >
+         </p>
+		 #if($Model.enableverifycode==1)
+        <p  style="width:700px;">
+            <label for="commentverifycode" style="float:left">验证码(*)</label>
+           
+           
+            <input id="commentverifycode" size="4" style="width:80px;float:left; margin-left:70px;" name="commentverifycode"  type="text"  />
+             <img align="absbottom" onclick="this.src='${Model.sitepath}common/verifycode.aspx?time=' + Math.random()" src="${Model.sitepath}common/verifycode.aspx" style="cursor: pointer; height:28px" alt="点击刷新"/>
+        </p>
+         #end
+			
+         <p class="comment-form-comment"><label for="comment">评论</label>
+          <textarea aria-required="true" name="commentcontent" id="commentcontent" cols="65" rows="8" style="margin-right:500px;"  ></textarea>
+         </p>	
+         
+
+         					
+         <p class="form-submit">
+		<input type="button" value="发表评论" id="submit" name="submit" onclick="PressComment.doComment();" />
+     
+        <input type="hidden" id="postid" name="postid" value="${Model.post.postid}" />
+        <input type="hidden" id="enableverifycode" value="${Model.enableverifycode}" />
+		  </p>
+		</form>
+			</div>
+         #end
+            <!-- #respond -->
+	</div>
+	
+	<script type="text/javascript" src="${Model.siteurl}common/scripts/comment.js"></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

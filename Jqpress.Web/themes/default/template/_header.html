@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>#if(${Model.IsDefault}==0) ${Model.PageTitle} - #end ${Model.SiteName} </title>
+<meta name="keywords" content="${Model.metakeywords}" />
+<meta name="description" content="${Model.MetaDescription}" />
+<link rel="stylesheet" type="text/css" media="all" href="${Model.themeurl}css/style.css" />
+<script type="text/javascript" src="${Model.siteurl}common/scripts/jquery.js"></script>
+<script type="text/javascript" src="${Model.siteurl}common/scripts/common.js"></script>
+${Model.head}
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+        <div class="site">
+            <h2><a href="${Model.siteurl}">${Model.sitename}</a></h2>
+            <p>${Model.sitedescription}</p>
+        </div>
+        <ul class="nav">
+        #foreach($item in $Model.navlinks)
+            <li><a href="${item.linkurl}" title="${item.description}" target="${item.target}">${item.linkname}</a></li>
+        #end
+        </ul>
+    </div>
+    <div id="container"> 

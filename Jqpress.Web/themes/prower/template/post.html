@@ -1,0 +1,36 @@
+#parse("_header.html")
+	<div id="main">
+		
+			  <div id="post-${post.postid}">
+				<h1>${post.title}</h1>
+				<div class="meta">$post.PostTime.tostring("yyyy-MM-dd")</div>
+				<div id="post_content"> ${post.postcontent}</div>
+				
+				<div class="meta">
+				作者：${post.author.link}, 分类：${post.category.link} 
+				标签：
+				#foreach($item in $post.Tags)
+				<a href="$item.Url">$item.CateName</a>
+				#end
+				,
+				 浏览(${post.viewcount}), 评论($post.commentcount)
+				</div>
+			</div>
+         <div>
+            上一篇: #if($post.previous.postid>0) ${post.previous.link} #else 没有了 #end
+            <br />
+            下一篇: #if($post.next.postid>0) ${post.next.link} #else 没有了 #end
+        </div>
+        
+         <h3>相关文章</h3>
+        <ul class="post-related">
+            #foreach($item in $post.relatedposts)
+            <li><a href="${item.url}">${item.title}</a>(${item.viewcount})</li>
+            #end
+        </ul>
+		
+	
+		#parse("_comment.html")
+	</div>
+#parse("_sidebar.html")
+#parse("_footer.html")

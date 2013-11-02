@@ -1,0 +1,99 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Blog.master.cs" Inherits="Jqpress.Web.admin.Blog" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="styles/layout.css" rel="stylesheet" type="text/css" media="screen" />
+ <script type="text/javascript" src="../../common/scripts/jquery.js"></script>
+    <asp:ContentPlaceHolder id="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+    
+    
+<div class="clr" >
+<div id="adm_header">
+	   <div class="right">
+		 <div class="top_account"><%=Jqpress.Blog.Common.AdminPage.CurrentUser.UserName%></div>
+		 <div class="top_link"><a onClick="return confirm('确定要退出吗？')" href="../login.aspx?act=logout" class="link2">退出</a></div>
+       </div>
+
+	   <div class="left" style="padding-top:10px">
+				<a href="#" target="_blank"></a>
+	   </div>
+       
+	   <div  class="sitetitle">
+		 <h1><span><%=Jqpress.Blog.Configuration.BlogConfig.GetSetting().SiteName%></span></h1>
+	   </div>
+         
+       <div id="topmenu" >
+            <ul>
+                <li class="current"><a href="index.aspx">控制台</a></li>
+          </ul>
+        </div>
+</div>
+
+
+<div class="body_container">
+	<div class="body_left">
+		<div class="menu_title1"><a href="post_list.aspx">文章</a></div>
+		<div class="menu_title2"><a href="post_list.aspx">文章列表</a></div>
+		<div class="menu_title2"><a href="post_list.aspx?hide=1">隐藏列表</a></div>
+		<div class="menu_title2"><a href="post_edit.aspx">添加新文章</a></div>
+		<div class="menu_title2"><a href="category_list.aspx">分类目录</a></div>
+		<div class="menu_title2"><a href="tag_list.aspx">文章标签</a></div>
+		<div class="menu_title2"><a href="comment_list.aspx">文章评论</a></div>
+		
+		<div class="menu_title1"><a href="user_list.aspx">用户</a></div>
+		<div class="menu_title2"><a href="user_list.aspx">用户管理</a></div>
+		
+	    <div class="menu_title1"><a href="link_list.aspx">链接</a></div>
+		<div class="menu_title2"><a href="link_list.aspx">链接管理</a></div>
+			
+		<div class="menu_title1"><a href="blog_set.aspx" >设置</a></div>
+		<div class="menu_title2"><a href="blog_set.aspx" >站点设置</a></div>
+        <div class="menu_title2"><a href="theme_list.aspx" >主题设置</a></div>
+
+        
+        <div class="menu_title1"><a href="#" >工具</a></div>
+        <div class="menu_title2"><a href="file_list.aspx" >文件管理</a></div>
+		<div class="menu_title2"><a href="blog_db.aspx" >数据库备份</a></div>
+		
+		<!--
+        <div class="menu_title2"><a href="#" >导出</a></div>
+        <div class="menu_title2"><a href="#" >导入</a></div>
+        -->
+            
+<%--		<div class="left_tips" style="margin-top:20px;line-height:18px;">
+			常见问题(FAQ)
+		</div>--%>
+	</div>
+	<div class="body_middle">
+	
+	<form id="form1" runat="server">
+		<asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+	</form>
+	
+   <div style="clear:both;"></div>
+		
+	</div>
+</div>
+</div>
+
+
+
+<div id="footer">
+<p class="alignleft" id="footer-left"><span id="footer-thankyou">感谢使用 <a href="http://jqpress.com/">jqpress</a> 进行创作。</span> |
+ <a href="http://jqpress.com/">官方文档</a> | <a href="http://jqpress.com/">反馈</a>
+
+<strong>
+技术支持：robotbird@163.com</strong>
+</p>
+<div class="clear"></div>
+</div>
+    
+    
+</body>
+</html>

@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jqpress.Framework", "Jqpress.Framework\Jqpress.Framework.csproj", "{24EF6952-D3FD-4C8B-B8FF-5D5E783F68A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jqpress.Blog", "Jqpress.Blog\Jqpress.Blog.csproj", "{E79A48D8-DA43-41EE-B6A8-3D8D548BC12A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jqpress.Web", "Jqpress.Web\Jqpress.Web.csproj", "{48F2A9FD-3B5C-4C74-9F67-F3460E2D8C05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24EF6952-D3FD-4C8B-B8FF-5D5E783F68A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24EF6952-D3FD-4C8B-B8FF-5D5E783F68A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24EF6952-D3FD-4C8B-B8FF-5D5E783F68A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E79A48D8-DA43-41EE-B6A8-3D8D548BC12A}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{E79A48D8-DA43-41EE-B6A8-3D8D548BC12A}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{E79A48D8-DA43-41EE-B6A8-3D8D548BC12A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E79A48D8-DA43-41EE-B6A8-3D8D548BC12A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48F2A9FD-3B5C-4C74-9F67-F3460E2D8C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48F2A9FD-3B5C-4C74-9F67-F3460E2D8C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48F2A9FD-3B5C-4C74-9F67-F3460E2D8C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

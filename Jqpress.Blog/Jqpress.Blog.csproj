@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E79A48D8-DA43-41EE-B6A8-3D8D548BC12A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jqpress.Blog</RootNamespace>
+    <AssemblyName>Jqpress.Blog</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NVelocity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\NVelocity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\AdminPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\EmailHelper.cs" />
+    <Compile Include="Common\Pager.cs" />
+    <Compile Include="Common\PagerControl.cs" />
+    <Compile Include="Configuration\BlogConfig.cs" />
+    <Compile Include="Data\Access\CategoryData.cs" />
+    <Compile Include="Data\Access\CommentData.cs" />
+    <Compile Include="Data\Access\LinkData.cs" />
+    <Compile Include="Data\Access\PostData.cs" />
+    <Compile Include="Data\Access\SiteData.cs" />
+    <Compile Include="Data\Access\TagData.cs" />
+    <Compile Include="Data\Access\UserData.cs" />
+    <Compile Include="Data\DatabaseProvider.cs" />
+    <Compile Include="Data\IData\ICategory.cs" />
+    <Compile Include="Data\IData\IComment.cs" />
+    <Compile Include="Data\IData\ILink.cs" />
+    <Compile Include="Data\IData\IPost.cs" />
+    <Compile Include="Data\IData\IStatistics.cs" />
+    <Compile Include="Data\IData\ITag.cs" />
+    <Compile Include="Data\IData\IUser.cs" />
+    <Compile Include="Entity\ArchiveInfo.cs" />
+    <Compile Include="Entity\BlogConfigInfo.cs" />
+    <Compile Include="Entity\CategoryInfo.cs" />
+    <Compile Include="Entity\CommentInfo.cs" />
+    <Compile Include="Entity\Enum\Enums.cs" />
+    <Compile Include="Entity\LinkInfo.cs" />
+    <Compile Include="Entity\PostInfo.cs" />
+    <Compile Include="Entity\SettingInfo.cs" />
+    <Compile Include="Entity\StatisticsInfo.cs" />
+    <Compile Include="Entity\TagInfo.cs" />
+    <Compile Include="Entity\ThemeInfo.cs" />
+    <Compile Include="Entity\UserInfo.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\PostListModel.cs" />
+    <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\SideBarModel.cs" />
+    <Compile Include="Ping\Manager.cs" />
+    <Compile Include="Ping\Pingback.cs" />
+    <Compile Include="Ping\PingService.cs" />
+    <Compile Include="Ping\Trackback.cs" />
+    <Compile Include="Ping\TrackbackMessage.cs" />
+    <Compile Include="BlogController.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ArchiveService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\CommentService.cs" />
+    <Compile Include="Services\LinkService.cs" />
+    <Compile Include="Services\PostService.cs" />
+    <Compile Include="Services\StatisticsService.cs" />
+    <Compile Include="Services\TagService.cs" />
+    <Compile Include="Services\ThemeService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="XmlRpc\MetaWeblogHelper.cs" />
+    <Compile Include="XmlRpc\XMLRPCRequest.cs" />
+    <Compile Include="XmlRpc\XMLRPCResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jqpress.Framework\Jqpress.Framework.csproj">
+      <Project>{24EF6952-D3FD-4C8B-B8FF-5D5E783F68A0}</Project>
+      <Name>Jqpress.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\MySql\" />
+    <Folder Include="Data\SqlServer\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

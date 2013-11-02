@@ -1,0 +1,81 @@
+#parse("_header.html")
+	<link type="text/css" rel="stylesheet" href="${Model.siteurl}common/syntaxhighlighter/styles/shCoreDefault.css"/>
+	<script type="text/javascript" src="${Model.siteurl}common/syntaxhighlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="${Model.siteurl}common/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="${Model.siteurl}common/syntaxhighlighter/scripts/shBrushCSharp.js"></script>
+	<script type="text/javascript" src="${Model.siteurl}common/syntaxhighlighter/scripts/shBrushJava.js"></script>
+	<script type="text/javascript" src="${Model.siteurl}common/syntaxhighlighter/scripts/shBrushSql.js"></script>
+<script type="text/javascript">SyntaxHighlighter.all();</script>	<style type="text/css">/* CodeHighlighter Begin */
+.cnblogs_code
+{
+	background-color: #F5F5F5;
+	font-family:Courier New;
+	font-size: 12px;
+	border: 1px solid #CCCCCC;
+	padding: 5px;
+	word-break: break-all;
+	overflow:auto;
+}
+.cnblogs_code pre{font-size: 12px;}
+.cnblogs_code span{
+	font-family:Courier New;
+	font-size: 12px;
+}
+.cnblogs_code_Collapse
+{
+	border-right: #808080 1px solid;
+	border-top: #808080 1px solid;
+	border-left: #808080 1px solid; 
+	border-bottom: #808080 1px solid; 
+	background-color: #FFF;
+	padding:2px;
+}
+.cnblogs_code_collapse
+{
+	border-right: #808080 1px solid;
+	border-top: #808080 1px solid;
+	border-left: #808080 1px solid; 
+	border-bottom: #808080 1px solid; 
+	background-color: #FFF;
+	padding:2px;
+}
+.cnblogs_code_hide{}
+.code_img_closed{vertical-align:middle;padding-right:5px;}
+.code_img_opened{vertical-align:middle;padding-right:5px;}
+.cnblogs_code_open{margin-top:5px;}
+/* CodeHighlighter End */
+</style>
+	<div id="main">
+		
+			  <div id="post-${Model.post.postid}">
+				<h1>${Model.post.title}</h1>
+				<div class="meta">$Model.post.PostTime.tostring("yyyy-MM-dd")</div>
+				<div id="post_content"> ${Model.post.postcontent}</div>
+				
+				<div class="meta">
+				作者：${Model.post.author.link}, 分类：${Model.post.category.link} 
+				标签：
+				#foreach($item in $Model.post.Tags)
+				<a href="$item.Url">$item.CateName</a>
+				#end
+				,
+				 浏览(${Model.post.viewcount}), 评论($Model.post.commentcount)
+				</div>
+			</div>
+         <div>
+            上一篇: #if($Model.post.previous.postid>0) ${Model.post.previous.link} #else 没有了 #end
+            <br />
+            下一篇: #if($Model.post.next.postid>0) ${Model.post.next.link} #else 没有了 #end
+        </div>
+        
+         <h3>相关文章</h3>
+        <ul class="post-related">
+            #foreach($item in $Model.post.relatedposts)
+            <li><a href="${item.url}">${item.title}</a>(${item.viewcount})</li>
+            #end
+        </ul>
+		
+	
+		#parse("_comment.html")
+	</div>
+#parse("_footer.html")

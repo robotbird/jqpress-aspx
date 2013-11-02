@@ -1,0 +1,30 @@
+#parse("_header.html")
+	<div id="main">
+		<ul id="post_list">
+			 #foreach($item in $posts)
+			<li> 
+					<h2><a  href="${item.url}">${item.title}</a></h2>
+					<div class="meta">$item.PostTime.tostring("yyyy-MM-dd")</div>
+					<div class="excerpt">
+				
+						${item.detail}
+                          <p>
+                               <a href="${item.url}">详情...</a>
+                          </p>
+						<div class="meta">${item.author.link} | ${item.category.link}
+                      
+						<div class="comments_num"><a href="${item.url}#comments">评论($item.commentcount)</a></div>
+					</div>
+				
+			</li>
+			#end
+		</ul>
+   #if($posts.count==0)
+    <div class="post">
+        <p>暂无对应文章</p>
+    </div>
+    #end
+    ${pager}
+	</div>
+	#parse("_sidebar.html")
+#parse("_footer.html")
