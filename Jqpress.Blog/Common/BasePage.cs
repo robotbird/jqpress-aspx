@@ -266,16 +266,18 @@ namespace Jqpress.Blog.Common
     /// 错误处理
     /// </summary>
     /// <param name="e"></param>
-    protected override void OnError(EventArgs e)
-    {
-        Exception ex = Server.GetLastError();
-        if (ex != null)
-        {
-            ResponseError("空间比较差劲啊,又出问题了", ex.Message);
-            Server.ClearError();
-        }
-        base.OnError(e);
+    //protected override void OnError(EventArgs e)
+    //{
+    //    Exception ex = Server.GetLastError();
+    //    if (ex != null)
+    //    {
+    //        ResponseError("空间比较差劲啊,又出问题了", ex.Message);
+    //        Server.ClearError();
+    //    }
+    //    base.OnError(e);
 
-    }
+    //}
+
+
     }
 }

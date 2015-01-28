@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
+using Mono.Data.Sqlite;
 using System.Data;
 using Jqpress.Blog.Entity;
-using Jqpress.Framework.DbProvider.Access;
+using Jqpress.Framework.DbProvider.Sqlite;
 using Jqpress.Framework.Configuration;
 namespace Jqpress.Blog.Data.Sqlite
 {
@@ -21,22 +21,22 @@ namespace Jqpress.Blog.Data.Sqlite
                              values (
                             @PostId, @ParentId,@UserId,@Author,@Email,@AuthorUrl,@Contents,@EmailNotify,@IpAddress,@CreateTime,@Approved)",ConfigHelper.Tableprefix);
 
-            OleDbParameter[] prams = { 
-                                        OleDbHelper.MakeInParam("@PostId", OleDbType.Integer,4, comment.PostId),
-                                        OleDbHelper.MakeInParam("@ParentId", OleDbType.Integer,4, comment.ParentId),
-                                        OleDbHelper.MakeInParam("@UserId", OleDbType.Integer,4, comment.UserId),
-                                        OleDbHelper.MakeInParam("@Author", OleDbType.VarWChar,255, comment.Author),
-                                        OleDbHelper.MakeInParam("@Email", OleDbType.VarWChar,255, comment.Email),
-                                        OleDbHelper.MakeInParam("@AuthorUrl", OleDbType.VarWChar,255, comment.AuthorUrl),
-                                        OleDbHelper.MakeInParam("@Contents", OleDbType.VarWChar,255, comment.Contents),
-                                        OleDbHelper.MakeInParam("@EmailNotify", OleDbType.Integer,4 ,    comment.EmailNotify),
-                                        OleDbHelper.MakeInParam("@IpAddress", OleDbType.VarWChar,255, comment.IpAddress),
-                                        OleDbHelper.MakeInParam("@CreateTime", OleDbType.Date,8, comment.CreateTime),
-                                        OleDbHelper.MakeInParam("@Approved", OleDbType.Integer,4 ,   comment.Approved),
+            SqliteParameter[] prams = { 
+                                        SqliteHelper.MakeInParam("@PostId", DbType.Int32,4, comment.PostId),
+                                        SqliteHelper.MakeInParam("@ParentId", DbType.Int32,4, comment.ParentId),
+                                        SqliteHelper.MakeInParam("@UserId", DbType.Int32,4, comment.UserId),
+                                        SqliteHelper.MakeInParam("@Author", DbType.String,255, comment.Author),
+                                        SqliteHelper.MakeInParam("@Email", DbType.String,255, comment.Email),
+                                        SqliteHelper.MakeInParam("@AuthorUrl", DbType.String,255, comment.AuthorUrl),
+                                        SqliteHelper.MakeInParam("@Contents", DbType.String,255, comment.Contents),
+                                        SqliteHelper.MakeInParam("@EmailNotify", DbType.Int32,4 ,    comment.EmailNotify),
+                                        SqliteHelper.MakeInParam("@IpAddress", DbType.String,255, comment.IpAddress),
+                                        SqliteHelper.MakeInParam("@CreateTime", DbType.Date,8, comment.CreateTime),
+                                        SqliteHelper.MakeInParam("@Approved", DbType.Int32,4 ,   comment.Approved),
             };
-            OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
 
-            int newId = Convert.ToInt32(OleDbHelper.ExecuteScalar(string.Format("select top 1 [CommentId] from [{0}comments]  order by [CommentId] desc",ConfigHelper.Tableprefix)));
+            int newId = Convert.ToInt32(SqliteHelper.ExecuteScalar(string.Format("select  [CommentId] from [{0}comments]  order by [CommentId] desc limit 1",ConfigHelper.Tableprefix)));
             return newId;
         }
 
@@ -61,22 +61,22 @@ namespace Jqpress.Blog.Data.Sqlite
                             Approved=@Approved
                             where CommentId=@CommentId ",ConfigHelper.Tableprefix);
 
-            OleDbParameter[] prams = { 
-                                        OleDbHelper.MakeInParam("@PostId", OleDbType.Integer,4, comment.PostId),
-                                        OleDbHelper.MakeInParam("@ParentId", OleDbType.Integer,4, comment.ParentId),
-                                        OleDbHelper.MakeInParam("@UserId", OleDbType.Integer,4, comment.UserId),
-                                        OleDbHelper.MakeInParam("@Author", OleDbType.VarWChar,255, comment.Author),
-                                        OleDbHelper.MakeInParam("@Email", OleDbType.VarWChar,255, comment.Email),
-                                        OleDbHelper.MakeInParam("@AuthorUrl", OleDbType.VarWChar,255, comment.AuthorUrl),
-                                        OleDbHelper.MakeInParam("@Contents", OleDbType.VarWChar,255, comment.Contents),
-                                        OleDbHelper.MakeInParam("@EmailNotify", OleDbType.Integer,4 ,    comment.EmailNotify),
-                                        OleDbHelper.MakeInParam("@IpAddress", OleDbType.VarWChar,255, comment.IpAddress),
-                                        OleDbHelper.MakeInParam("@CreateTime", OleDbType.Date,8, comment.CreateTime),
-                                        OleDbHelper.MakeInParam("@Approved", OleDbType.Integer,4 ,   comment.Approved),
-                                        OleDbHelper.MakeInParam("@CommentId", OleDbType.Integer,4, comment.CommentId),
+            SqliteParameter[] prams = { 
+                                        SqliteHelper.MakeInParam("@PostId", DbType.Int32,4, comment.PostId),
+                                        SqliteHelper.MakeInParam("@ParentId", DbType.Int32,4, comment.ParentId),
+                                        SqliteHelper.MakeInParam("@UserId", DbType.Int32,4, comment.UserId),
+                                        SqliteHelper.MakeInParam("@Author", DbType.String,255, comment.Author),
+                                        SqliteHelper.MakeInParam("@Email", DbType.String,255, comment.Email),
+                                        SqliteHelper.MakeInParam("@AuthorUrl", DbType.String,255, comment.AuthorUrl),
+                                        SqliteHelper.MakeInParam("@Contents", DbType.String,255, comment.Contents),
+                                        SqliteHelper.MakeInParam("@EmailNotify", DbType.Int32,4 ,    comment.EmailNotify),
+                                        SqliteHelper.MakeInParam("@IpAddress", DbType.String,255, comment.IpAddress),
+                                        SqliteHelper.MakeInParam("@CreateTime", DbType.Date,8, comment.CreateTime),
+                                        SqliteHelper.MakeInParam("@Approved", DbType.Int32,4 ,   comment.Approved),
+                                        SqliteHelper.MakeInParam("@CommentId", DbType.Int32,4, comment.CommentId),
 
                                     };
-            return OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
 
         }
 
@@ -89,11 +89,11 @@ namespace Jqpress.Blog.Data.Sqlite
         {
 
             string cmdText = string.Format("delete from [{0}comments] where [commentId] = @commentId",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-								OleDbHelper.MakeInParam("@commentId",OleDbType.Integer,4,commentId)
+            SqliteParameter[] prams = { 
+								SqliteHelper.MakeInParam("@commentId",DbType.Int32,4,commentId)
 							};
 
-            int result = OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            int result = SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
             return result;
         }
 
@@ -105,10 +105,10 @@ namespace Jqpress.Blog.Data.Sqlite
         public CommentInfo GetComment(int commentId)
         {
             string cmdText = string.Format("select * from [{0}comments] where [commentId] = @commentId",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-								        OleDbHelper.MakeInParam("@commentId",OleDbType.Integer,4,commentId)
+            SqliteParameter[] prams = { 
+								        SqliteHelper.MakeInParam("@commentId",DbType.Int32,4,commentId)
 							          };
-            List<CommentInfo> list = DataReaderToCommentList(OleDbHelper.ExecuteReader(cmdText, prams));
+            List<CommentInfo> list = DataReaderToCommentList(SqliteHelper.ExecuteReader(cmdText, prams));
 
             return list.Count > 0 ? list[0] : null;
         }
@@ -161,12 +161,12 @@ namespace Jqpress.Blog.Data.Sqlite
             }
 
             string cmdTotalRecord = "select count(1) from ["+ConfigHelper.Tableprefix+"comments] where " + condition;
-            totalRecord = Convert.ToInt32(OleDbHelper.ExecuteScalar(CommandType.Text, cmdTotalRecord));
+            totalRecord = Convert.ToInt32(SqliteHelper.ExecuteScalar(CommandType.Text, cmdTotalRecord));
 
             //   throw new Exception(cmdTotalRecord);
 
-            string cmdText = OleDbHelper.GetPageSql("["+ConfigHelper.Tableprefix+"comments]", "[CommentId]", "*", pageSize, pageIndex, order, condition);
-            return DataReaderToCommentList(OleDbHelper.ExecuteReader(cmdText));
+            string cmdText = SqliteHelper.GetPageSql("["+ConfigHelper.Tableprefix+"comments]", "[CommentId]", "*", pageSize, pageIndex, order, condition);
+            return DataReaderToCommentList(SqliteHelper.ExecuteReader(cmdText));
         }
 
         /// <summary>
@@ -177,10 +177,10 @@ namespace Jqpress.Blog.Data.Sqlite
         public int DeleteCommentByPost(int postId)
         {
             string cmdText = string.Format("delete from [{0}comments] where [postId] = @postId",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-								OleDbHelper.MakeInParam("@postId",OleDbType.Integer,4,postId)
+            SqliteParameter[] prams = { 
+								SqliteHelper.MakeInParam("@postId",DbType.Int32,4,postId)
 							};
-            int result = OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            int result = SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
 
             return result;
         }
@@ -190,7 +190,7 @@ namespace Jqpress.Blog.Data.Sqlite
         /// </summary>
         /// <param name="read"></param>
         /// <returns></returns>
-        private static List<CommentInfo> DataReaderToCommentList(OleDbDataReader read)
+        private static List<CommentInfo> DataReaderToCommentList(SqliteDataReader read)
         {
             var list = new List<CommentInfo>();
             while (read.Read())
@@ -240,7 +240,7 @@ namespace Jqpress.Blog.Data.Sqlite
                 condition += " and [parentid]=0";
             }
             string cmdText = string.Format("select count(1) from [{0}comments] where " + condition,ConfigHelper.Tableprefix);
-            return Convert.ToInt32(OleDbHelper.ExecuteScalar(CommandType.Text, cmdText));
+            return Convert.ToInt32(SqliteHelper.ExecuteScalar(CommandType.Text, cmdText));
         }
     }
 }

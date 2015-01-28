@@ -515,7 +515,7 @@ namespace Jqpress.Framework.Web
             return string.Format("{0}://{1}{2}{3}",
                                  HttpContext.Current.Request.Url.Scheme,
                                  HttpContext.Current.Request.Url.Host.ToString(),
-                                 (port == 80 || port == 0) ? "" : ":" + port,
+                                 (port == 80 || port == 0 ||port == 82) ? "" : ":" + port,
                                  sitePath);
         }
         /// <summary>

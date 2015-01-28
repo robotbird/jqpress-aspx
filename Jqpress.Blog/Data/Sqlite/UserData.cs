@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
+using Mono.Data.Sqlite;
 using System.Data;
 using Jqpress.Blog.Entity;
-using Jqpress.Framework.DbProvider.Access;
+using Jqpress.Framework.DbProvider.Sqlite;
 using Jqpress.Framework.Configuration;
 
 namespace Jqpress.Blog.Data.Sqlite
@@ -21,26 +21,26 @@ namespace Jqpress.Blog.Data.Sqlite
                                 [UserType],[UserName],[NickName],[Password],[Email],[SiteUrl],[AvatarUrl],[Description],[sortnum],[Status],[PostCount],[CommentCount],[CreateTime])
                                 values (
                                 @UserType,@UserName,@NickName,@Password,@Email,@SiteUrl,@AvatarUrl,@Description,@SortNum,@Status, @PostCount,@CommentCount,@CreateTime )",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-                                        OleDbHelper.MakeInParam("@UserType", OleDbType.Integer,4, userinfo.UserType),
-                                        OleDbHelper.MakeInParam("@UserName", OleDbType.VarWChar,50, userinfo.UserName),
-                                        OleDbHelper.MakeInParam("@NickName", OleDbType.VarWChar,50, userinfo.NickName),
-                                        OleDbHelper.MakeInParam("@Password", OleDbType.VarWChar,50, userinfo.Password),
-                                        OleDbHelper.MakeInParam("@Email", OleDbType.VarWChar,50, userinfo.Email),
-                                        OleDbHelper.MakeInParam("@SiteUrl", OleDbType.VarWChar,255, userinfo.SiteUrl),
-                                        OleDbHelper.MakeInParam("@AvatarUrl", OleDbType.VarWChar,255, userinfo.AvatarUrl),
-                                        OleDbHelper.MakeInParam("@Description", OleDbType.VarWChar,255, userinfo.Description),
-                                        OleDbHelper.MakeInParam("@SortNum", OleDbType.Integer,4, userinfo.SortNum),
-                                        OleDbHelper.MakeInParam("@Status", OleDbType.Integer,4, userinfo.Status),                           
-                                        OleDbHelper.MakeInParam("@PostCount", OleDbType.Integer,4, userinfo.PostCount),
-                                        OleDbHelper.MakeInParam("@CommentCount", OleDbType.Integer,4, userinfo.CommentCount),
-                                        OleDbHelper.MakeInParam("@CreateTime", OleDbType.Date,8, userinfo.CreateTime),
+            SqliteParameter[] prams = { 
+                                        SqliteHelper.MakeInParam("@UserType", DbType.Int32,4, userinfo.UserType),
+                                        SqliteHelper.MakeInParam("@UserName", DbType.String,50, userinfo.UserName),
+                                        SqliteHelper.MakeInParam("@NickName", DbType.String,50, userinfo.NickName),
+                                        SqliteHelper.MakeInParam("@Password", DbType.String,50, userinfo.Password),
+                                        SqliteHelper.MakeInParam("@Email", DbType.String,50, userinfo.Email),
+                                        SqliteHelper.MakeInParam("@SiteUrl", DbType.String,255, userinfo.SiteUrl),
+                                        SqliteHelper.MakeInParam("@AvatarUrl", DbType.String,255, userinfo.AvatarUrl),
+                                        SqliteHelper.MakeInParam("@Description", DbType.String,255, userinfo.Description),
+                                        SqliteHelper.MakeInParam("@SortNum", DbType.Int32,4, userinfo.SortNum),
+                                        SqliteHelper.MakeInParam("@Status", DbType.Int32,4, userinfo.Status),                           
+                                        SqliteHelper.MakeInParam("@PostCount", DbType.Int32,4, userinfo.PostCount),
+                                        SqliteHelper.MakeInParam("@CommentCount", DbType.Int32,4, userinfo.CommentCount),
+                                        SqliteHelper.MakeInParam("@CreateTime", DbType.Date,8, userinfo.CreateTime),
                                         
                                     };
-            int r = OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            int r = SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
             if (r > 0)
             {
-                return Convert.ToInt32(OleDbHelper.ExecuteScalar(string.Format("select top 1 [UserId] from [{0}users]  order by [UserId] desc",ConfigHelper.Tableprefix)));
+                return Convert.ToInt32(SqliteHelper.ExecuteScalar(string.Format("select [UserId] from [{0}users]  order by [UserId] desc limit 1",ConfigHelper.Tableprefix)));
             }
             return 0;
         }
@@ -67,23 +67,23 @@ namespace Jqpress.Blog.Data.Sqlite
                                 [CommentCount]=@CommentCount,
                                 [CreateTime]=@CreateTime
                                 where UserId=@UserId",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-                                        OleDbHelper.MakeInParam("@UserType", OleDbType.Integer,4, userinfo.UserType),
-                                        OleDbHelper.MakeInParam("@UserName", OleDbType.VarWChar,50, userinfo.UserName),
-                                        OleDbHelper.MakeInParam("@NickName", OleDbType.VarWChar,50, userinfo.NickName),
-                                        OleDbHelper.MakeInParam("@Password", OleDbType.VarWChar,50, userinfo.Password),
-                                        OleDbHelper.MakeInParam("@Email", OleDbType.VarWChar,50, userinfo.Email),
-                                        OleDbHelper.MakeInParam("@SiteUrl", OleDbType.VarWChar,255, userinfo.SiteUrl),
-                                        OleDbHelper.MakeInParam("@AvatarUrl", OleDbType.VarWChar,255, userinfo.AvatarUrl),
-                                        OleDbHelper.MakeInParam("@Description", OleDbType.VarWChar,255, userinfo.Description),
-                                        OleDbHelper.MakeInParam("@SortNum", OleDbType.VarWChar,255, userinfo.SortNum),
-                                        OleDbHelper.MakeInParam("@Status", OleDbType.Integer,4, userinfo.Status),                           
-                                        OleDbHelper.MakeInParam("@PostCount", OleDbType.Integer,4, userinfo.PostCount),
-                                        OleDbHelper.MakeInParam("@CommentCount", OleDbType.Integer,4, userinfo.CommentCount),
-                                        OleDbHelper.MakeInParam("@CreateTime", OleDbType.Date,8, userinfo.CreateTime),
-                                        OleDbHelper.MakeInParam("@UserId", OleDbType.Integer,4, userinfo.UserId),
+            SqliteParameter[] prams = { 
+                                        SqliteHelper.MakeInParam("@UserType", DbType.Int32,4, userinfo.UserType),
+                                        SqliteHelper.MakeInParam("@UserName", DbType.String,50, userinfo.UserName),
+                                        SqliteHelper.MakeInParam("@NickName", DbType.String,50, userinfo.NickName),
+                                        SqliteHelper.MakeInParam("@Password", DbType.String,50, userinfo.Password),
+                                        SqliteHelper.MakeInParam("@Email", DbType.String,50, userinfo.Email),
+                                        SqliteHelper.MakeInParam("@SiteUrl", DbType.String,255, userinfo.SiteUrl),
+                                        SqliteHelper.MakeInParam("@AvatarUrl", DbType.String,255, userinfo.AvatarUrl),
+                                        SqliteHelper.MakeInParam("@Description", DbType.String,255, userinfo.Description),
+                                        SqliteHelper.MakeInParam("@SortNum", DbType.String,255, userinfo.SortNum),
+                                        SqliteHelper.MakeInParam("@Status", DbType.Int32,4, userinfo.Status),                           
+                                        SqliteHelper.MakeInParam("@PostCount", DbType.Int32,4, userinfo.PostCount),
+                                        SqliteHelper.MakeInParam("@CommentCount", DbType.Int32,4, userinfo.CommentCount),
+                                        SqliteHelper.MakeInParam("@CreateTime", DbType.Date,8, userinfo.CreateTime),
+                                        SqliteHelper.MakeInParam("@UserId", DbType.Int32,4, userinfo.UserId),
                                     };
-            return OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
         }
 
         /// <summary>
@@ -94,10 +94,10 @@ namespace Jqpress.Blog.Data.Sqlite
         public int DeleteUser(int userid)
         {
             string cmdText = string.Format("delete from [{0}users] where [userid] = @userid",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-								        OleDbHelper.MakeInParam("@userid",OleDbType.Integer,4,userid)
+            SqliteParameter[] prams = { 
+								        SqliteHelper.MakeInParam("@userid",DbType.Int32,4,userid)
 							        };
-            return OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Jqpress.Blog.Data.Sqlite
         public List<UserInfo> GetUserList()
         {
             string cmdText = string.Format("select * from [{0}users]  order by [sortnum] asc,[userid] asc",ConfigHelper.Tableprefix);
-            return DataReaderToUserList(OleDbHelper.ExecuteReader(cmdText));
+            return DataReaderToUserList(SqliteHelper.ExecuteReader(cmdText));
 
         }
 
@@ -116,7 +116,7 @@ namespace Jqpress.Blog.Data.Sqlite
         /// </summary>
         /// <param name="read"></param>
         /// <returns></returns>
-        private static List<UserInfo> DataReaderToUserList(OleDbDataReader read)
+        private static List<UserInfo> DataReaderToUserList(SqliteDataReader read)
         {
             var list = new List<UserInfo>();
             while (read.Read())
@@ -155,10 +155,10 @@ namespace Jqpress.Blog.Data.Sqlite
         public bool ExistsUserName(string userName)
         {
             string cmdText = string.Format("select count(1) from [{0}users] where [userName] = @userName ",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-                                        OleDbHelper.MakeInParam("@userName",OleDbType.VarWChar,50,userName),
+            SqliteParameter[] prams = { 
+                                        SqliteHelper.MakeInParam("@userName",DbType.String,50,userName),
 							        };
-            return Convert.ToInt32(OleDbHelper.ExecuteScalar(CommandType.Text, cmdText, prams)) > 0;
+            return Convert.ToInt32(SqliteHelper.ExecuteScalar(CommandType.Text, cmdText, prams)) > 0;
         }
     }
 }

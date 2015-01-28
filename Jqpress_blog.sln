@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jqpress.Framework", "Jqpress.Framework\Jqpress.Framework.csproj", "{24EF6952-D3FD-4C8B-B8FF-5D5E783F68A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jqpress.Blog", "Jqpress.Blog\Jqpress.Blog.csproj", "{E79A48D8-DA43-41EE-B6A8-3D8D548BC12A}"

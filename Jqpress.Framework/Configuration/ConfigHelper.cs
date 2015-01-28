@@ -62,11 +62,12 @@ namespace Jqpress.Framework.Configuration
             {
                 if (string.IsNullOrEmpty(_siteurl))
                 {
-                    _siteurl = "http://" + System.Web.HttpContext.Current.Request.Url.Host + SitePath;
-                    if (System.Web.HttpContext.Current.Request.Url.Port != 80)
-                    {
-                        _siteurl = "http://" + System.Web.HttpContext.Current.Request.Url.Host + ":" + System.Web.HttpContext.Current.Request.Url.Port + SitePath;
-                    }
+                    //_siteurl = "http://" + System.Web.HttpContext.Current.Request.Url.Host + SitePath;
+                    _siteurl = SitePath;
+                    //if (System.Web.HttpContext.Current.Request.Url.Port != 80 && System.Web.HttpContext.Current.Request.Url.Port != 82)
+                    //{
+                    //    _siteurl = "http://" + System.Web.HttpContext.Current.Request.Url.Host + ":" + System.Web.HttpContext.Current.Request.Url.Port + SitePath;
+                    //}
                 }
                 return _siteurl;
             }

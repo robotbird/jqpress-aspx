@@ -80,17 +80,17 @@ namespace Jqpress.Web.admin.blog
                 //}
 
 
-                DbPath = ConfigHelper.SitePath + ConfigHelper.DbConnection;
-                System.IO.FileInfo file = new System.IO.FileInfo(Server.MapPath(ConfigHelper.SitePath + ConfigHelper.DbConnection));
-                DbSize = GetFileSize(file.Length);
+               // DbPath = ConfigHelper.SitePath + ConfigHelper.DbConnection;
+              //  System.IO.FileInfo file = new System.IO.FileInfo(Server.MapPath(ConfigHelper.SitePath + ConfigHelper.DbConnection));
+               // DbSize = GetFileSize(file.Length);
 
-                UpfilePath = ConfigHelper.SitePath + "upfiles";
+               // UpfilePath = ConfigHelper.SitePath + "upfiles";
 
-                GetDirectorySize(Server.MapPath(UpfilePath));
+                //GetDirectorySize(Server.MapPath(UpfilePath));
 
-                UpfileSize = GetFileSize(dirSize);
+               // UpfileSize = GetFileSize(dirSize);
 
-                GetDirectoryCount(Server.MapPath(UpfilePath));
+                //GetDirectoryCount(Server.MapPath(UpfilePath));
             }
             ShowResult();
 

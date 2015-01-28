@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
+using Mono.Data.Sqlite;
 using System.Data;
 using Jqpress.Blog.Entity;
-using Jqpress.Framework.DbProvider.Access;
+using Jqpress.Framework.DbProvider.Sqlite;
 using Jqpress.Framework.Configuration;
 
 namespace Jqpress.Blog.Data.Sqlite
@@ -20,22 +20,22 @@ namespace Jqpress.Blog.Data.Sqlite
                             (
                             @type,@linkname,@linkurl,@position,@target,@description,@sortnum,@status,@createtime
                             )",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-                                OleDbHelper.MakeInParam("@type",OleDbType.Integer,4,link.Type),
-								OleDbHelper.MakeInParam("@linkname",OleDbType.VarWChar,100,link.LinkName),
-                                OleDbHelper.MakeInParam("@linkurl",OleDbType.VarWChar,255,link.LinkUrl),
-                                OleDbHelper.MakeInParam("@position",OleDbType.Integer,4,link.Position),
-                                OleDbHelper.MakeInParam("@target",OleDbType.VarWChar,50,link.Target),
-								OleDbHelper.MakeInParam("@description",OleDbType.VarWChar,255,link.Description),
-                                OleDbHelper.MakeInParam("@sortnum",OleDbType.Integer,4,link.SortNum),
-								OleDbHelper.MakeInParam("@status",OleDbType.Integer,4,link.Status),
-								OleDbHelper.MakeInParam("@createtime",OleDbType.Date,8,link.CreateTime),
+            SqliteParameter[] prams = { 
+                                SqliteHelper.MakeInParam("@type",DbType.Int32,4,link.Type),
+								SqliteHelper.MakeInParam("@linkname",DbType.String,100,link.LinkName),
+                                SqliteHelper.MakeInParam("@linkurl",DbType.String,255,link.LinkUrl),
+                                SqliteHelper.MakeInParam("@position",DbType.Int32,4,link.Position),
+                                SqliteHelper.MakeInParam("@target",DbType.String,50,link.Target),
+								SqliteHelper.MakeInParam("@description",DbType.String,255,link.Description),
+                                SqliteHelper.MakeInParam("@sortnum",DbType.Int32,4,link.SortNum),
+								SqliteHelper.MakeInParam("@status",DbType.Int32,4,link.Status),
+								SqliteHelper.MakeInParam("@createtime",DbType.Date,8,link.CreateTime),
 							};
 
-            int r = OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            int r = SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
             if (r > 0)
             {
-                return Convert.ToInt32(OleDbHelper.ExecuteScalar(string.Format("select top 1 [linkid] from [{0}links]  order by [linkid] desc",ConfigHelper.Tableprefix)));
+                return Convert.ToInt32(SqliteHelper.ExecuteScalar(string.Format("select  [linkid] from [{0}links]  order by [linkid] desc limit 1",ConfigHelper.Tableprefix)));
             }
             return 0;
         }
@@ -53,29 +53,29 @@ namespace Jqpress.Blog.Data.Sqlite
                                 [status]=@status,
                                 [createtime]=@createtime
                                 where linkid=@linkid",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-                                OleDbHelper.MakeInParam("@type",OleDbType.Integer,4,link.Type),
-								OleDbHelper.MakeInParam("@linkname",OleDbType.VarWChar,100,link.LinkName),
-                                OleDbHelper.MakeInParam("@linkurl",OleDbType.VarWChar,255,link.LinkUrl),
-                                OleDbHelper.MakeInParam("@position",OleDbType.Integer,4,link.Position),
-                                OleDbHelper.MakeInParam("@target",OleDbType.VarWChar,50,link.Target),
-								OleDbHelper.MakeInParam("@description",OleDbType.VarWChar,255,link.Description),
-                                OleDbHelper.MakeInParam("@sortnum",OleDbType.Integer,4,link.SortNum),
-								OleDbHelper.MakeInParam("@status",OleDbType.Integer,4,link.Status),
-								OleDbHelper.MakeInParam("@createtime",OleDbType.Date,8,link.CreateTime),
-                                OleDbHelper.MakeInParam("@linkid",OleDbType.Integer,4,link.LinkId),
+            SqliteParameter[] prams = { 
+                                SqliteHelper.MakeInParam("@type",DbType.Int32,4,link.Type),
+								SqliteHelper.MakeInParam("@linkname",DbType.String,100,link.LinkName),
+                                SqliteHelper.MakeInParam("@linkurl",DbType.String,255,link.LinkUrl),
+                                SqliteHelper.MakeInParam("@position",DbType.Int32,4,link.Position),
+                                SqliteHelper.MakeInParam("@target",DbType.String,50,link.Target),
+								SqliteHelper.MakeInParam("@description",DbType.String,255,link.Description),
+                                SqliteHelper.MakeInParam("@sortnum",DbType.Int32,4,link.SortNum),
+								SqliteHelper.MakeInParam("@status",DbType.Int32,4,link.Status),
+								SqliteHelper.MakeInParam("@createtime",DbType.Date,8,link.CreateTime),
+                                SqliteHelper.MakeInParam("@linkid",DbType.Int32,4,link.LinkId),
 							};
 
-            return Convert.ToInt32(OleDbHelper.ExecuteScalar(CommandType.Text, cmdText, prams));
+            return Convert.ToInt32(SqliteHelper.ExecuteScalar(CommandType.Text, cmdText, prams));
         }
 
         public int DeleteLink(int linkId)
         {
             string cmdText = string.Format("delete from [{0}links] where [linkid] = @linkid",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = { 
-								OleDbHelper.MakeInParam("@linkid",OleDbType.Integer,4,linkId)
+            SqliteParameter[] prams = { 
+								SqliteHelper.MakeInParam("@linkid",DbType.Int32,4,linkId)
 							};
-            return OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
 
 
         }
@@ -86,17 +86,17 @@ namespace Jqpress.Blog.Data.Sqlite
 
             string cmdText = string.Format("select * from [{0}links]  order by [sortnum] asc,[linkid] asc",ConfigHelper.Tableprefix);
 
-            return DataReaderToListLink(OleDbHelper.ExecuteReader(cmdText));
+            return DataReaderToListLink(SqliteHelper.ExecuteReader(cmdText));
 
         }
 
         /// <summary>
         /// 转换实体
         /// </summary>
-        /// <param LinkName="read">OleDbDataReader</param>
+        /// <param LinkName="read">SqliteDataReader</param>
         /// <param name="read"></param>
         /// <returns>LinkInfo</returns>
-        private static List<LinkInfo> DataReaderToListLink(OleDbDataReader read)
+        private static List<LinkInfo> DataReaderToListLink(SqliteDataReader read)
         {
             var list = new List<LinkInfo>();
             while (read.Read())

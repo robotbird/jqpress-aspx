@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Jqpress.Blog.Entity;
-using System.Data.OleDb;
+using Mono.Data.Sqlite;
 using System.Data;
-using Jqpress.Framework.DbProvider.Access;
+using Jqpress.Framework.DbProvider.Sqlite;
 using Jqpress.Framework.Configuration;
 namespace Jqpress.Blog.Data.Sqlite
 {
@@ -12,38 +12,38 @@ namespace Jqpress.Blog.Data.Sqlite
         public bool UpdateStatistics(StatisticsInfo statistics)
         {
             string cmdText =string.Format( "update [{0}sites] set PostCount=@PostCount,CommentCount=@CommentCount,VisitCount=@VisitCount,TagCount=@TagCount",ConfigHelper.Tableprefix);
-            OleDbParameter[] prams = {
-					                        OleDbHelper.MakeInParam("@PostCount", OleDbType.Integer,4,statistics.PostCount),
-					                        OleDbHelper.MakeInParam("@CommentCount", OleDbType.Integer,4,statistics.CommentCount),
-					                        OleDbHelper.MakeInParam("@VisitCount", OleDbType.Integer,4,statistics.VisitCount),
-					                        OleDbHelper.MakeInParam("@TagCount", OleDbType.Integer,4,statistics.TagCount),
+            SqliteParameter[] prams = {
+					                        SqliteHelper.MakeInParam("@PostCount", DbType.Int32,4,statistics.PostCount),
+					                        SqliteHelper.MakeInParam("@CommentCount", DbType.Int32,4,statistics.CommentCount),
+					                        SqliteHelper.MakeInParam("@VisitCount", DbType.Int32,4,statistics.VisitCount),
+					                        SqliteHelper.MakeInParam("@TagCount", DbType.Int32,4,statistics.TagCount),
                                         };
 
-            return OleDbHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams) == 1;
+            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams) == 1;
         }
 
         public StatisticsInfo GetStatistics()
         {
-            string cmdText = string.Format("select top 1 * from [{0}sites]", ConfigHelper.Tableprefix);
+            string cmdText = string.Format("select  * from [{0}sites] limit 1", ConfigHelper.Tableprefix);
 
             string insertText = string.Format("insert into [{0}sites] ([PostCount],[CommentCount],[VisitCount],[TagCount]) values ( '0','0','0','0')", ConfigHelper.Tableprefix);
 
-            List<StatisticsInfo> list = DataReaderToListSite(OleDbHelper.ExecuteReader(cmdText));
+            List<StatisticsInfo> list = DataReaderToListSite(SqliteHelper.ExecuteReader(cmdText));
 
             if (list.Count == 0)
             {
-                OleDbHelper.ExecuteNonQuery(insertText);
+                SqliteHelper.ExecuteNonQuery(insertText);
             }
-            list = DataReaderToListSite(OleDbHelper.ExecuteReader(cmdText));
+            list = DataReaderToListSite(SqliteHelper.ExecuteReader(cmdText));
 
             return list.Count > 0 ? list[0] : null;
         }
         /// <summary>
         /// 转换实体
         /// </summary>
-        /// <param name="read">OleDbDataReader</param>
+        /// <param name="read">SqliteDataReader</param>
         /// <returns>TermInfo</returns>
-        private static List<StatisticsInfo> DataReaderToListSite(OleDbDataReader read)
+        private static List<StatisticsInfo> DataReaderToListSite(SqliteDataReader read)
         {
             var list = new List<StatisticsInfo>();
             while (read.Read())
