@@ -168,19 +168,21 @@ namespace Jqpress.Blog.Entity
         /// <summary>
         /// 作者
         /// </summary>
-        public UserInfo Author
-        {
-            get
-            {
-                UserInfo user = Jqpress.Blog.Services.UserService.GetUser(this.UserId);
-                if (user != null)
-                {
-                    return user;
-                }
-                return new UserInfo();
+        //public UserInfo Author
+        //{
+        //    get
+        //    {
+        //        UserInfo user = Jqpress.Blog.Services.UserService.GetUser(this.UserId);
+        //        if (user != null)
+        //        {
+        //            return user;
+        //        }
+        //        return new UserInfo();
 
-            }
-        }
+        //    }
+        //}
+
+        public UserInfo Author { get; set; }
 
         /// <summary>
         /// 所属分类

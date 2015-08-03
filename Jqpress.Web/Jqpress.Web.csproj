@@ -18,6 +18,7 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -235,8 +236,6 @@
     <Content Include="admin\styles\ie-css3.htc" />
     <Content Include="admin\styles\layout.css" />
     <Content Include="admin\styles\login.css" />
-    <Content Include="App_Data\Jqpress_blog.mdb">
-    </Content>
     <Content Include="common\verifycode.aspx" />
     <Content Include="common\config\rewrite.config" />
     <Content Include="common\scripts\common.js" />
@@ -675,7 +674,6 @@
     <Content Include="themes\prower\theme.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\language_cn.xml" />
     <Content Include="common\ajax\comment.ashx" />
     <Content Include="common\scripts\comment.js" />
     <Content Include="default.aspx" />
@@ -724,6 +722,7 @@
     <None Include="common\syntaxhighlighter\tests\webrick.sh" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="common\editors\tiny_mce\plugins\spellchecker\classes\utils\" />
     <Folder Include="common\editors\tiny_mce\plugins\spellchecker\includes\" />
     <Folder Include="upfiles\" />

@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Jqpress.Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("xzsyw")]
+[assembly: AssemblyCompany("jqpress")]
 [assembly: AssemblyProduct("Jqpress.Web")]
-[assembly: AssemblyCopyright("Copyright © xzsyw 2011")]
+[assembly: AssemblyCopyright("Copyright © jqpress 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
