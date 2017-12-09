@@ -7,5 +7,23 @@
 - nvelocity 模板引擎
 - dapper 轻量级orm框架
 - vs2010
+博客首页
+![首页](http://images2017.cnblogs.com/blog/94489/201712/94489-20171209220004931-929713759.png)
+
+
+后台登录，默认用户名admin，密码admin
+![登录](http://images2017.cnblogs.com/blog/94489/201712/94489-20171209230531857-927221251.png)
+
+后台首页
+![管理后台首页](http://images2017.cnblogs.com/blog/94489/201712/94489-20171209222459841-1698271926.png)
+
+文章编辑
+![文章编辑](http://images2017.cnblogs.com/blog/94489/201712/94489-20171209222740122-1851304180.png)
+
+
+## linux部署方式
+linux下需要安装mono和jexus就可以运行起来，mono作为.net framework的linux运行环境，jexus作为web服务器。
+
+
 ## 说明文章
 http://www.cnblogs.com/jqbird/p/7965995.html
