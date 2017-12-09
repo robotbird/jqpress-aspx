@@ -1,0 +1,45 @@
+﻿
+	</div>
+</div>
+<aside id="footer_box">
+
+	<div id="linkcat">
+	    #foreach($item in $Model.sidebar.recenttags)
+            <a href="${item.url}" title="${item.description}">${item.catename}</a><span>(${item.postcount})</span>
+        #end
+        <br />
+        友链：
+        #foreach($item in $Model.sidebar.GeneralLinks)
+            <a href="${item.linkurl}" title="${item.description}" target="${item.target}">${item.linkname}</a>
+        #end
+	</div>
+</aside>
+
+<footer id="footer">
+	<p>
+		${Model.footerhtml}
+	Processed in  ${processtime} second(s),
+    . Powered by <a href="http://www.jqpress.com" target="_blank">Jqpress Blog</a>
+    . Theme by <a href="http://www.jqpress.com" target="_blank">机器鸟</a>
+	</p>
+</footer>
+
+${sqlanalytical}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26569357-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F20c5641058abd3876c5219ceb77ad31f' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</body>
+</html>

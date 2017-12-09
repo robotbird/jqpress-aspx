@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mono.Data.Sqlite;
+//using Mono.Data.Sqlite;
+using System.Data.SQLite;
 using System.Data;
 using System.Linq;
 using Jqpress.Blog.Data.IData;
 using Jqpress.Blog.Entity;
-using Jqpress.Framework.DbProvider.Sqlite;
+using Jqpress.Framework.DbProvider.SQLite;
 using Jqpress.Framework.Utils;
 using Jqpress.Framework.Configuration;
 using Jqpress.Framework.DbProvider;
 
-namespace Jqpress.Blog.Data.Sqlite
+namespace Jqpress.Blog.Data.SQLite
 {
     public partial class DataProvider : IDataProvider
     {
@@ -42,7 +43,7 @@ namespace Jqpress.Blog.Data.Sqlite
             while (true)
             {
                 string cmdText = post.PostId == 0 ? string.Format("select count(1) from [{1}posts] where [slug]='{0}'  ", post.Slug,ConfigHelper.Tableprefix) : string.Format("select count(1) from [{2}posts] where [slug]='{0}'   and [postid]<>{1}", post.Slug, post.PostId, ConfigHelper.Tableprefix);
-                int r = Convert.ToInt32(SqliteHelper.ExecuteScalar(cmdText));
+                int r = Convert.ToInt32(SQLiteHelper.ExecuteScalar(cmdText));
                 if (r == 0)
                 {
                     return;
@@ -67,35 +68,35 @@ namespace Jqpress.Blog.Data.Sqlite
                                 (
                                 @CategoryId,@Title,@Summary,@PostContent,@Slug,@UserId,@CommentStatus,@CommentCount,@ViewCount,@Tag,@UrlFormat,@Template,@Recommend,@Status,@TopStatus,@HomeStatus,@HideStatus,@PostTime,@UpdateTime
                                 )",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
+            SQLiteParameter[] prams = { 
 								
-                                SqliteHelper.MakeInParam("@CategoryId",DbType.Int32,4,postinfo.CategoryId),
-								SqliteHelper.MakeInParam("@Title",DbType.String,255,postinfo.Title),
-								SqliteHelper.MakeInParam("@Summary",DbType.String,0,postinfo.Summary),
-								SqliteHelper.MakeInParam("@PostContent",DbType.String,0,postinfo.PostContent),
-								SqliteHelper.MakeInParam("@Slug",DbType.String,255,postinfo.Slug),
-								SqliteHelper.MakeInParam("@UserId",DbType.Int32,4,postinfo.UserId),
-								SqliteHelper.MakeInParam("@CommentStatus",DbType.Int32,1,postinfo.CommentStatus),
-								SqliteHelper.MakeInParam("@CommentCount",DbType.Int32,4,postinfo.CommentCount),
-								SqliteHelper.MakeInParam("@ViewCount",DbType.Int32,4,postinfo.ViewCount),
-								SqliteHelper.MakeInParam("@Tag",DbType.String,255,postinfo.Tag),
-                                SqliteHelper.MakeInParam("@UrlFormat",DbType.Int32,1,postinfo.UrlFormat),
-                                SqliteHelper.MakeInParam("@Template",DbType.String,50,postinfo.Template ),
-                                SqliteHelper.MakeInParam("@Recommend",DbType.Int32,1,postinfo.Recommend),
-								SqliteHelper.MakeInParam("@Status",DbType.Int32,1,postinfo.Status),
-                                SqliteHelper.MakeInParam("@TopStatus",DbType.Int32,1,postinfo.TopStatus),
-                                SqliteHelper.MakeInParam("@HomeStatus",DbType.Int32,1,postinfo.HomeStatus),
-                                SqliteHelper.MakeInParam("@HideStatus",DbType.Int32,1,postinfo.HideStatus),
-								SqliteHelper.MakeInParam("@PostTime",DbType.Date,8,postinfo.PostTime),
-								SqliteHelper.MakeInParam("@UpdateTime",DbType.Date,8,postinfo.UpdateTime)
+                                SQLiteHelper.MakeInParam("@CategoryId",DbType.Int32,4,postinfo.CategoryId),
+								SQLiteHelper.MakeInParam("@Title",DbType.String,255,postinfo.Title),
+								SQLiteHelper.MakeInParam("@Summary",DbType.String,0,postinfo.Summary),
+								SQLiteHelper.MakeInParam("@PostContent",DbType.String,0,postinfo.PostContent),
+								SQLiteHelper.MakeInParam("@Slug",DbType.String,255,postinfo.Slug),
+								SQLiteHelper.MakeInParam("@UserId",DbType.Int32,4,postinfo.UserId),
+								SQLiteHelper.MakeInParam("@CommentStatus",DbType.Int32,1,postinfo.CommentStatus),
+								SQLiteHelper.MakeInParam("@CommentCount",DbType.Int32,4,postinfo.CommentCount),
+								SQLiteHelper.MakeInParam("@ViewCount",DbType.Int32,4,postinfo.ViewCount),
+								SQLiteHelper.MakeInParam("@Tag",DbType.String,255,postinfo.Tag),
+                                SQLiteHelper.MakeInParam("@UrlFormat",DbType.Int32,1,postinfo.UrlFormat),
+                                SQLiteHelper.MakeInParam("@Template",DbType.String,50,postinfo.Template ),
+                                SQLiteHelper.MakeInParam("@Recommend",DbType.Int32,1,postinfo.Recommend),
+								SQLiteHelper.MakeInParam("@Status",DbType.Int32,1,postinfo.Status),
+                                SQLiteHelper.MakeInParam("@TopStatus",DbType.Int32,1,postinfo.TopStatus),
+                                SQLiteHelper.MakeInParam("@HomeStatus",DbType.Int32,1,postinfo.HomeStatus),
+                                SQLiteHelper.MakeInParam("@HideStatus",DbType.Int32,1,postinfo.HideStatus),
+								SQLiteHelper.MakeInParam("@PostTime",DbType.Date,8,postinfo.PostTime),
+								SQLiteHelper.MakeInParam("@UpdateTime",DbType.Date,8,postinfo.UpdateTime)
 							};
-            SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
-            int newId = TypeConverter.ObjectToInt(SqliteHelper.ExecuteScalar(string.Format("select  [PostId] from [{0}Posts] order by [PostId] desc limit 1",ConfigHelper.Tableprefix)));
+            SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            int newId = TypeConverter.ObjectToInt(SQLiteHelper.ExecuteScalar(string.Format("select  [PostId] from [{0}Posts] order by [PostId] desc limit 1",ConfigHelper.Tableprefix)));
             //if (newId > 0)
             //{
-            //    SqliteHelper.ExecuteNonQuery(string.Format("update [{0}users] set [postcount]=[postcount]+1 where [userid]={0}", postinfo.UserId));
-            //    SqliteHelper.ExecuteNonQuery("update [{0}sites] set [postcount]=[postcount]+1");
-            //    SqliteHelper.ExecuteNonQuery(string.Format("update [{0}terms] set [count]=[count]+1 where [termid]={0}", postinfo.CategoryId));
+            //    SQLiteHelper.ExecuteNonQuery(string.Format("update [{0}users] set [postcount]=[postcount]+1 where [userid]={0}", postinfo.UserId));
+            //    SQLiteHelper.ExecuteNonQuery("update [{0}sites] set [postcount]=[postcount]+1");
+            //    SQLiteHelper.ExecuteNonQuery(string.Format("update [{0}terms] set [count]=[count]+1 where [termid]={0}", postinfo.CategoryId));
             //}
             return newId;
         }
@@ -145,18 +146,18 @@ namespace Jqpress.Blog.Data.Sqlite
             if (oldPost == null) throw new NotImplementedException();
 
             string cmdText = string.Format("delete from [{0}posts] where [PostId] = @PostId",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-								SqliteHelper.MakeInParam("@PostId",DbType.Int32,4,postid)
+            SQLiteParameter[] prams = { 
+								SQLiteHelper.MakeInParam("@PostId",DbType.Int32,4,postid)
 							};
-            int result = SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            int result = SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
 
 
 
             //if (oldPost != null)
             //{
-            //    SqliteHelper.ExecuteNonQuery(string.Format("update [{0}users] set [postcount]=[postcount]-1 where [userid]={0}", oldPost.UserId));
-            //    SqliteHelper.ExecuteNonQuery("update [{0}sites] set [postcount]=[postcount]-1");
-            //    SqliteHelper.ExecuteNonQuery(string.Format("update [{0}terms] set [count]=[count]-1 where [termid]={0}", oldPost.CategoryId));
+            //    SQLiteHelper.ExecuteNonQuery(string.Format("update [{0}users] set [postcount]=[postcount]-1 where [userid]={0}", oldPost.UserId));
+            //    SQLiteHelper.ExecuteNonQuery("update [{0}sites] set [postcount]=[postcount]-1");
+            //    SQLiteHelper.ExecuteNonQuery(string.Format("update [{0}terms] set [count]=[count]-1 where [termid]={0}", oldPost.CategoryId));
             //}
 
             return result;
@@ -245,10 +246,10 @@ namespace Jqpress.Blog.Data.Sqlite
 
             //   throw new Exception(cmdTotalRecord);
 
-            recordCount = TypeConverter.ObjectToInt(SqliteHelper.ExecuteScalar(CommandType.Text, cmdTotalRecord));
+            recordCount = TypeConverter.ObjectToInt(SQLiteHelper.ExecuteScalar(CommandType.Text, cmdTotalRecord));
 
 
-            string cmdText = SqliteHelper.GetPageSql("["+ConfigHelper.Tableprefix+"Posts]", "[PostId]", "*", pageSize, pageIndex, 1, condition);
+            string cmdText = SQLiteHelper.GetPageSql("["+ConfigHelper.Tableprefix+"Posts]", "[PostId]", "*", pageSize, pageIndex, 1, condition);
 
 
 
@@ -295,11 +296,11 @@ namespace Jqpress.Blog.Data.Sqlite
         //public int GetPostId(string slug)
         //{
         //    string cmdText = "select [postid] from [{0}posts] where [slug]=@slug";
-        //    SqliteParameter[] prams = {  
-        //                           SqliteHelper.MakeInParam("@slug",DbType.String,200,slug),
+        //    SQLiteParameter[] prams = {  
+        //                           SQLiteHelper.MakeInParam("@slug",DbType.String,200,slug),
 
         //                            };
-        //    return TypeConverter.ObjectToInt(SqliteHelper.ExecuteScalar(CommandType.Text, cmdText, prams));
+        //    return TypeConverter.ObjectToInt(SQLiteHelper.ExecuteScalar(CommandType.Text, cmdText, prams));
 
         //}
 
@@ -308,7 +309,7 @@ namespace Jqpress.Blog.Data.Sqlite
             string cmdText = string.Format("select format(PostTime, 'yyyymm') as [date] ,  count(*) as [count] from [{0}posts] where [status]=1 and [hidestatus]=0  group by  format(PostTime, 'yyyymm')  order by format(PostTime, 'yyyymm') desc",ConfigHelper.Tableprefix);
 
             var list = new List<ArchiveInfo>();
-            using (SqliteDataReader read = SqliteHelper.ExecuteReader(cmdText))
+            using (SQLiteDataReader read = SQLiteHelper.ExecuteReader(cmdText))
             {
 
                 while (read.Read())
@@ -328,11 +329,11 @@ namespace Jqpress.Blog.Data.Sqlite
         public int UpdatePostViewCount(int postId, int addCount)
         {
             string cmdText = string.Format("update [{0}posts] set [viewcount] = [viewcount] + @addcount where [postid]=@postid",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-								SqliteHelper.MakeInParam("@addcount",DbType.Int32,4,addCount),
-                                SqliteHelper.MakeInParam("@postid",DbType.Int32,4,postId),
+            SQLiteParameter[] prams = { 
+								SQLiteHelper.MakeInParam("@addcount",DbType.Int32,4,addCount),
+                                SQLiteHelper.MakeInParam("@postid",DbType.Int32,4,postId),
 							};
-            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
         }
 
     }

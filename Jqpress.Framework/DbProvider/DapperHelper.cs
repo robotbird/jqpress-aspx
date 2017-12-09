@@ -13,8 +13,8 @@ namespace Jqpress.Framework.DbProvider
 {
     public class DapperHelper
     {
-        //private static string _mdbpath = System.Web.HttpContext.Current.Server.MapPath(ConfigHelper.SitePath + ConfigHelper.DbConnection);
-       // public static string ConnectionString = string.Format("Data Source={0};Pooling=true;FailIfMissing=false", _mdbpath);//for windows
+        private static string _mdbpath = System.Web.HttpContext.Current.Server.MapPath(ConfigHelper.SitePath + ConfigHelper.DbConnection);
+        public static string ConnectionString = string.Format("Data Source={0};Pooling=true;FailIfMissing=false", _mdbpath);//for windows
 
        // public static string ConnectionString = "URI=file:" + _mdbpath + ",version=3";//for mono & linux
 
@@ -34,7 +34,7 @@ namespace Jqpress.Framework.DbProvider
         //for windows
         public SQLiteConnection OpenConnection()
         {
-            SQLiteConnection conn = new SQLiteConnection("");
+            SQLiteConnection conn = new SQLiteConnection(ConnectionString);
             conn.Open();
             return conn;
         }

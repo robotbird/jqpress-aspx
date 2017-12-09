@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Mono.Data.Sqlite;
+using System.Data.SQLite;
 using System.Data;
 using Jqpress.Blog.Entity;
-using Jqpress.Framework.DbProvider.Sqlite;
+using Jqpress.Framework.DbProvider.SQLite;
 using Jqpress.Framework.Configuration;
 
-namespace Jqpress.Blog.Data.Sqlite
+namespace Jqpress.Blog.Data.SQLite
 {
     public partial class DataProvider
     {
@@ -21,26 +22,26 @@ namespace Jqpress.Blog.Data.Sqlite
                                 [UserType],[UserName],[NickName],[Password],[Email],[SiteUrl],[AvatarUrl],[Description],[sortnum],[Status],[PostCount],[CommentCount],[CreateTime])
                                 values (
                                 @UserType,@UserName,@NickName,@Password,@Email,@SiteUrl,@AvatarUrl,@Description,@SortNum,@Status, @PostCount,@CommentCount,@CreateTime )",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-                                        SqliteHelper.MakeInParam("@UserType", DbType.Int32,4, userinfo.UserType),
-                                        SqliteHelper.MakeInParam("@UserName", DbType.String,50, userinfo.UserName),
-                                        SqliteHelper.MakeInParam("@NickName", DbType.String,50, userinfo.NickName),
-                                        SqliteHelper.MakeInParam("@Password", DbType.String,50, userinfo.Password),
-                                        SqliteHelper.MakeInParam("@Email", DbType.String,50, userinfo.Email),
-                                        SqliteHelper.MakeInParam("@SiteUrl", DbType.String,255, userinfo.SiteUrl),
-                                        SqliteHelper.MakeInParam("@AvatarUrl", DbType.String,255, userinfo.AvatarUrl),
-                                        SqliteHelper.MakeInParam("@Description", DbType.String,255, userinfo.Description),
-                                        SqliteHelper.MakeInParam("@SortNum", DbType.Int32,4, userinfo.SortNum),
-                                        SqliteHelper.MakeInParam("@Status", DbType.Int32,4, userinfo.Status),                           
-                                        SqliteHelper.MakeInParam("@PostCount", DbType.Int32,4, userinfo.PostCount),
-                                        SqliteHelper.MakeInParam("@CommentCount", DbType.Int32,4, userinfo.CommentCount),
-                                        SqliteHelper.MakeInParam("@CreateTime", DbType.Date,8, userinfo.CreateTime),
+            SQLiteParameter[] prams = { 
+                                        SQLiteHelper.MakeInParam("@UserType", DbType.Int32,4, userinfo.UserType),
+                                        SQLiteHelper.MakeInParam("@UserName", DbType.String,50, userinfo.UserName),
+                                        SQLiteHelper.MakeInParam("@NickName", DbType.String,50, userinfo.NickName),
+                                        SQLiteHelper.MakeInParam("@Password", DbType.String,50, userinfo.Password),
+                                        SQLiteHelper.MakeInParam("@Email", DbType.String,50, userinfo.Email),
+                                        SQLiteHelper.MakeInParam("@SiteUrl", DbType.String,255, userinfo.SiteUrl),
+                                        SQLiteHelper.MakeInParam("@AvatarUrl", DbType.String,255, userinfo.AvatarUrl),
+                                        SQLiteHelper.MakeInParam("@Description", DbType.String,255, userinfo.Description),
+                                        SQLiteHelper.MakeInParam("@SortNum", DbType.Int32,4, userinfo.SortNum),
+                                        SQLiteHelper.MakeInParam("@Status", DbType.Int32,4, userinfo.Status),                           
+                                        SQLiteHelper.MakeInParam("@PostCount", DbType.Int32,4, userinfo.PostCount),
+                                        SQLiteHelper.MakeInParam("@CommentCount", DbType.Int32,4, userinfo.CommentCount),
+                                        SQLiteHelper.MakeInParam("@CreateTime", DbType.Date,8, userinfo.CreateTime),
                                         
                                     };
-            int r = SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            int r = SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
             if (r > 0)
             {
-                return Convert.ToInt32(SqliteHelper.ExecuteScalar(string.Format("select [UserId] from [{0}users]  order by [UserId] desc limit 1",ConfigHelper.Tableprefix)));
+                return Convert.ToInt32(SQLiteHelper.ExecuteScalar(string.Format("select [UserId] from [{0}users]  order by [UserId] desc limit 1",ConfigHelper.Tableprefix)));
             }
             return 0;
         }
@@ -67,23 +68,23 @@ namespace Jqpress.Blog.Data.Sqlite
                                 [CommentCount]=@CommentCount,
                                 [CreateTime]=@CreateTime
                                 where UserId=@UserId",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-                                        SqliteHelper.MakeInParam("@UserType", DbType.Int32,4, userinfo.UserType),
-                                        SqliteHelper.MakeInParam("@UserName", DbType.String,50, userinfo.UserName),
-                                        SqliteHelper.MakeInParam("@NickName", DbType.String,50, userinfo.NickName),
-                                        SqliteHelper.MakeInParam("@Password", DbType.String,50, userinfo.Password),
-                                        SqliteHelper.MakeInParam("@Email", DbType.String,50, userinfo.Email),
-                                        SqliteHelper.MakeInParam("@SiteUrl", DbType.String,255, userinfo.SiteUrl),
-                                        SqliteHelper.MakeInParam("@AvatarUrl", DbType.String,255, userinfo.AvatarUrl),
-                                        SqliteHelper.MakeInParam("@Description", DbType.String,255, userinfo.Description),
-                                        SqliteHelper.MakeInParam("@SortNum", DbType.String,255, userinfo.SortNum),
-                                        SqliteHelper.MakeInParam("@Status", DbType.Int32,4, userinfo.Status),                           
-                                        SqliteHelper.MakeInParam("@PostCount", DbType.Int32,4, userinfo.PostCount),
-                                        SqliteHelper.MakeInParam("@CommentCount", DbType.Int32,4, userinfo.CommentCount),
-                                        SqliteHelper.MakeInParam("@CreateTime", DbType.Date,8, userinfo.CreateTime),
-                                        SqliteHelper.MakeInParam("@UserId", DbType.Int32,4, userinfo.UserId),
+            SQLiteParameter[] prams = { 
+                                        SQLiteHelper.MakeInParam("@UserType", DbType.Int32,4, userinfo.UserType),
+                                        SQLiteHelper.MakeInParam("@UserName", DbType.String,50, userinfo.UserName),
+                                        SQLiteHelper.MakeInParam("@NickName", DbType.String,50, userinfo.NickName),
+                                        SQLiteHelper.MakeInParam("@Password", DbType.String,50, userinfo.Password),
+                                        SQLiteHelper.MakeInParam("@Email", DbType.String,50, userinfo.Email),
+                                        SQLiteHelper.MakeInParam("@SiteUrl", DbType.String,255, userinfo.SiteUrl),
+                                        SQLiteHelper.MakeInParam("@AvatarUrl", DbType.String,255, userinfo.AvatarUrl),
+                                        SQLiteHelper.MakeInParam("@Description", DbType.String,255, userinfo.Description),
+                                        SQLiteHelper.MakeInParam("@SortNum", DbType.String,255, userinfo.SortNum),
+                                        SQLiteHelper.MakeInParam("@Status", DbType.Int32,4, userinfo.Status),                           
+                                        SQLiteHelper.MakeInParam("@PostCount", DbType.Int32,4, userinfo.PostCount),
+                                        SQLiteHelper.MakeInParam("@CommentCount", DbType.Int32,4, userinfo.CommentCount),
+                                        SQLiteHelper.MakeInParam("@CreateTime", DbType.Date,8, userinfo.CreateTime),
+                                        SQLiteHelper.MakeInParam("@UserId", DbType.Int32,4, userinfo.UserId),
                                     };
-            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
         }
 
         /// <summary>
@@ -94,10 +95,10 @@ namespace Jqpress.Blog.Data.Sqlite
         public int DeleteUser(int userid)
         {
             string cmdText = string.Format("delete from [{0}users] where [userid] = @userid",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-								        SqliteHelper.MakeInParam("@userid",DbType.Int32,4,userid)
+            SQLiteParameter[] prams = { 
+								        SQLiteHelper.MakeInParam("@userid",DbType.Int32,4,userid)
 							        };
-            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace Jqpress.Blog.Data.Sqlite
         public List<UserInfo> GetUserList()
         {
             string cmdText = string.Format("select * from [{0}users]  order by [sortnum] asc,[userid] asc",ConfigHelper.Tableprefix);
-            return DataReaderToUserList(SqliteHelper.ExecuteReader(cmdText));
+            return DataReaderToUserList(SQLiteHelper.ExecuteReader(cmdText));
 
         }
 
@@ -116,7 +117,7 @@ namespace Jqpress.Blog.Data.Sqlite
         /// </summary>
         /// <param name="read"></param>
         /// <returns></returns>
-        private static List<UserInfo> DataReaderToUserList(SqliteDataReader read)
+        private static List<UserInfo> DataReaderToUserList(SQLiteDataReader read)
         {
             var list = new List<UserInfo>();
             while (read.Read())
@@ -155,10 +156,10 @@ namespace Jqpress.Blog.Data.Sqlite
         public bool ExistsUserName(string userName)
         {
             string cmdText = string.Format("select count(1) from [{0}users] where [userName] = @userName ",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-                                        SqliteHelper.MakeInParam("@userName",DbType.String,50,userName),
+            SQLiteParameter[] prams = { 
+                                        SQLiteHelper.MakeInParam("@userName",DbType.String,50,userName),
 							        };
-            return Convert.ToInt32(SqliteHelper.ExecuteScalar(CommandType.Text, cmdText, prams)) > 0;
+            return Convert.ToInt32(SQLiteHelper.ExecuteScalar(CommandType.Text, cmdText, prams)) > 0;
         }
     }
 }

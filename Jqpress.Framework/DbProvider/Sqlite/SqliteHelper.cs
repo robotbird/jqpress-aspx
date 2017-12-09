@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using Mono.Data.Sqlite;
+//using Mono.Data.SQLite;
+using System.Data.SQLite;
 using System.Reflection;
 using Jqpress.Framework.Configuration;
 
-namespace Jqpress.Framework.DbProvider.Sqlite
+namespace Jqpress.Framework.DbProvider.SQLite
 {
-    public sealed class SqliteHelper
+    public sealed class SQLiteHelper
     {
         /// <summary>
         /// 数据库链接字符串
@@ -19,12 +20,16 @@ namespace Jqpress.Framework.DbProvider.Sqlite
             get;
             set;
         }
-        static SqliteHelper()
+        static SQLiteHelper()
         {
             //数据库文件路径
             var _mdbpath = System.Web.HttpContext.Current.Server.MapPath(ConfigHelper.SitePath + ConfigHelper.DbConnection);//for windows
             //var filePath = System.Environment.CurrentDirectory + @"\App_Data\Jqpress.db";
-            var connStr =  "URI=file:" + _mdbpath + ",version=3";//for sqlite & linux
+            string connStr = @"Data Source=" + @""+ _mdbpath + ";Initial Catalog=sqlite;";
+            //var connStr =  "URI=file:" + _mdbpath + ",version=3";//for SQLite & linux
+            connStr = string.Format("Data Source={0};Pooling=true;FailIfMissing=false", _mdbpath);//for windows
+
+
             ConnectionString = connStr;
         }
 
@@ -37,9 +42,9 @@ namespace Jqpress.Framework.DbProvider.Sqlite
         /// <param name="type">参数类型</param>
         /// <param name="size">参数大小</param>
         /// <returns></returns>
-        public static SqliteParameter MakeInParam(string name, object value, DbType type, int size = 50)
+        public static SQLiteParameter MakeInParam(string name, object value, DbType type, int size = 50)
         {
-            var para = new SqliteParameter(name, type, size);
+            var para = new SQLiteParameter(name, type, size);
             para.Direction = ParameterDirection.Input;
             para.Value = value;
             return para;
@@ -52,9 +57,9 @@ namespace Jqpress.Framework.DbProvider.Sqlite
         /// <param name="type">参数类型</param>
         /// <param name="size">参数大小</param>
         /// <returns></returns>
-        public static SqliteParameter MakeInParam(string name, DbType type, int size, object value)
+        public static SQLiteParameter MakeInParam(string name, DbType type, int size, object value)
         {
-            var para = new SqliteParameter(name, type, size);
+            var para = new SQLiteParameter(name, type, size);
             para.Direction = ParameterDirection.Input;
             para.Value = value;
             return para;
@@ -67,23 +72,23 @@ namespace Jqpress.Framework.DbProvider.Sqlite
         /// <param name="type">参数类型</param>
         /// <param name="size">参数大小</param>
         /// <returns></returns>
-        public static SqliteParameter MakeOutParam(string name, DbType type = DbType.String, int size = 50)
+        public static SQLiteParameter MakeOutParam(string name, DbType type = DbType.String, int size = 50)
         {
-            var para = new SqliteParameter(name, type, size);
+            var para = new SQLiteParameter(name, type, size);
             para.Direction = ParameterDirection.Output;
             return para;
         }
         #endregion
 
         #region Connection
-        static SqliteConnection CreateConnection()
+        static SQLiteConnection CreateConnection()
         {
-            var conn = new SqliteConnection(ConnectionString);
+            var conn = new SQLiteConnection(ConnectionString);
             return conn;
         }
-        static SqliteCommand CreateCommand(string commandText, CommandType commandType, SqliteConnection connection, params SqliteParameter[] paramList)
+        static SQLiteCommand CreateCommand(string commandText, CommandType commandType, SQLiteConnection connection, params SQLiteParameter[] paramList)
         {
-            var cmd = new SqliteCommand(commandText, connection);
+            var cmd = new SQLiteCommand(commandText, connection);
             cmd.CommandType = commandType;
             if (paramList != null)
             {
@@ -103,7 +108,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
             return ExecuteNonQuery(commandText,null);
         }
 
-        public static int ExecuteNonQuery(CommandType cmdType, string commandText, params SqliteParameter[] paramList)
+        public static int ExecuteNonQuery(CommandType cmdType, string commandText, params SQLiteParameter[] paramList)
         {
             using (var conn = CreateConnection())
             {
@@ -115,7 +120,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
             }
         }
 
-        public static int ExecuteNonQuery(string commandText, params SqliteParameter[] paramList)
+        public static int ExecuteNonQuery(string commandText, params SQLiteParameter[] paramList)
         {
             using (var conn = CreateConnection())
             {
@@ -135,14 +140,14 @@ namespace Jqpress.Framework.DbProvider.Sqlite
         /// <param name="commandText"></param>
         /// <param name="paramList"></param>
         /// <returns></returns>
-        //public static DataSet ExecuteDataSet(string commandText, params SqliteParameter[] paramList)
+        //public static DataSet ExecuteDataSet(string commandText, params SQLiteParameter[] paramList)
         //{
         //    using (var conn = CreateConnection())
         //    {
         //        conn.Open();
         //        using (var cmd = CreateCommand(commandText, CommandType.Text, conn, paramList))
         //        {
-        //            var ada = new SqliteDataAdapter(cmd);
+        //            var ada = new SQLiteDataAdapter(cmd);
         //            var ds = new DataSet();
         //            ada.Fill(ds);
         //            return ds;
@@ -155,7 +160,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
         /// <param name="commandText"></param>
         /// <param name="paramList"></param>
         /// <returns></returns>
-        //public static DataTable ExecuteDataTable(string commandText, params SqliteParameter[] paramList)
+        //public static DataTable ExecuteDataTable(string commandText, params SQLiteParameter[] paramList)
         //{
         //    var ds = ExecuteDataSet(commandText, paramList);
         //    return ds.Tables[0];
@@ -167,7 +172,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
         /// <param name="commandText"></param>
         /// <param name="paramList"></param>
         /// <returns></returns>
-        //public static List<T> ExecuteList<T>(string commandText, params SqliteParameter[] paramList)
+        //public static List<T> ExecuteList<T>(string commandText, params SQLiteParameter[] paramList)
         //{
         //    var dt = ExecuteDataTable(commandText, paramList);
         //    return CollectionHelper.ConvertTo<T>(dt);
@@ -179,7 +184,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
         /// <param name="commandText"></param>
         /// <param name="paraList"></param>
         /// <returns></returns>
-        //public static T ExecuteItem<T>(string commandText, params SqliteParameter[] paraList)
+        //public static T ExecuteItem<T>(string commandText, params SQLiteParameter[] paraList)
         //{
         //    var dt = ExecuteDataTable(commandText, paraList);
         //    if (dt.Rows.Count == 0) return default(T);
@@ -190,23 +195,23 @@ namespace Jqpress.Framework.DbProvider.Sqlite
 
         #region ExecuteReader
 
-        public static SqliteDataReader ExecuteReader(string commandText) 
+        public static SQLiteDataReader ExecuteReader(string commandText) 
         {
             return ExecuteReader(CommandType.Text,commandText,null);
         }
 
-        public static SqliteDataReader ExecuteReader(string commandText, SqliteParameter[] paramList)
+        public static SQLiteDataReader ExecuteReader(string commandText, SQLiteParameter[] paramList)
         {
             return ExecuteReader(CommandType.Text, commandText, paramList);
         }
         /// <summary>
-        /// 返回 SqliteDataReader
+        /// 返回 SQLiteDataReader
         /// </summary>
         /// <param name="cmdType">命令类型</param>
         /// <param name="cmdText">SQL语句或存储过程名</param>
         /// <param name="prams">参数组</param>
         /// <returns></returns>
-        public static SqliteDataReader ExecuteReader(CommandType cmdType, string commandText, SqliteParameter[] paramList)
+        public static SQLiteDataReader ExecuteReader(CommandType cmdType, string commandText, SQLiteParameter[] paramList)
         {
             try
             {
@@ -214,7 +219,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
                 var conn = CreateConnection();
                     conn.Open();
                     var cmd = CreateCommand(commandText, cmdType, conn, paramList);
-                        SqliteDataReader read = cmd.ExecuteReader();
+                        SQLiteDataReader read = cmd.ExecuteReader();
                         cmd.Parameters.Clear();
                         return read;
             }
@@ -227,7 +232,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
         #endregion
 
         #region ExecuteScalar
-        public static object ExecuteScalar(CommandType type,string commandText, params SqliteParameter[] paramList)
+        public static object ExecuteScalar(CommandType type,string commandText, params SQLiteParameter[] paramList)
         {
             using (var conn = CreateConnection())
             {
@@ -239,7 +244,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
             }
         }
 
-        public static object ExecuteScalar(string commandText, params SqliteParameter[] paramList)
+        public static object ExecuteScalar(string commandText, params SQLiteParameter[] paramList)
         {
             using (var conn = CreateConnection())
             {
@@ -254,7 +259,7 @@ namespace Jqpress.Framework.DbProvider.Sqlite
 
 
         /// <summary>
-        /// 获取分页Sql for sqlite
+        /// 获取分页Sql for SQLite
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="colName"></param>

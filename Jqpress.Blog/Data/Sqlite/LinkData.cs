@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mono.Data.Sqlite;
+//using Mono.Data.Sqlite;
+using System.Data.SQLite;
 using System.Data;
 using Jqpress.Blog.Entity;
-using Jqpress.Framework.DbProvider.Sqlite;
+using Jqpress.Framework.DbProvider.SQLite;
 using Jqpress.Framework.Configuration;
 
-namespace Jqpress.Blog.Data.Sqlite
+namespace Jqpress.Blog.Data.SQLite
 {
     public partial class DataProvider
     {
@@ -20,22 +21,22 @@ namespace Jqpress.Blog.Data.Sqlite
                             (
                             @type,@linkname,@linkurl,@position,@target,@description,@sortnum,@status,@createtime
                             )",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-                                SqliteHelper.MakeInParam("@type",DbType.Int32,4,link.Type),
-								SqliteHelper.MakeInParam("@linkname",DbType.String,100,link.LinkName),
-                                SqliteHelper.MakeInParam("@linkurl",DbType.String,255,link.LinkUrl),
-                                SqliteHelper.MakeInParam("@position",DbType.Int32,4,link.Position),
-                                SqliteHelper.MakeInParam("@target",DbType.String,50,link.Target),
-								SqliteHelper.MakeInParam("@description",DbType.String,255,link.Description),
-                                SqliteHelper.MakeInParam("@sortnum",DbType.Int32,4,link.SortNum),
-								SqliteHelper.MakeInParam("@status",DbType.Int32,4,link.Status),
-								SqliteHelper.MakeInParam("@createtime",DbType.Date,8,link.CreateTime),
+            SQLiteParameter[] prams = { 
+                                SQLiteHelper.MakeInParam("@type",DbType.Int32,4,link.Type),
+								SQLiteHelper.MakeInParam("@linkname",DbType.String,100,link.LinkName),
+                                SQLiteHelper.MakeInParam("@linkurl",DbType.String,255,link.LinkUrl),
+                                SQLiteHelper.MakeInParam("@position",DbType.Int32,4,link.Position),
+                                SQLiteHelper.MakeInParam("@target",DbType.String,50,link.Target),
+								SQLiteHelper.MakeInParam("@description",DbType.String,255,link.Description),
+                                SQLiteHelper.MakeInParam("@sortnum",DbType.Int32,4,link.SortNum),
+								SQLiteHelper.MakeInParam("@status",DbType.Int32,4,link.Status),
+								SQLiteHelper.MakeInParam("@createtime",DbType.Date,8,link.CreateTime),
 							};
 
-            int r = SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            int r = SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
             if (r > 0)
             {
-                return Convert.ToInt32(SqliteHelper.ExecuteScalar(string.Format("select  [linkid] from [{0}links]  order by [linkid] desc limit 1",ConfigHelper.Tableprefix)));
+                return Convert.ToInt32(SQLiteHelper.ExecuteScalar(string.Format("select  [linkid] from [{0}links]  order by [linkid] desc limit 1",ConfigHelper.Tableprefix)));
             }
             return 0;
         }
@@ -53,29 +54,29 @@ namespace Jqpress.Blog.Data.Sqlite
                                 [status]=@status,
                                 [createtime]=@createtime
                                 where linkid=@linkid",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-                                SqliteHelper.MakeInParam("@type",DbType.Int32,4,link.Type),
-								SqliteHelper.MakeInParam("@linkname",DbType.String,100,link.LinkName),
-                                SqliteHelper.MakeInParam("@linkurl",DbType.String,255,link.LinkUrl),
-                                SqliteHelper.MakeInParam("@position",DbType.Int32,4,link.Position),
-                                SqliteHelper.MakeInParam("@target",DbType.String,50,link.Target),
-								SqliteHelper.MakeInParam("@description",DbType.String,255,link.Description),
-                                SqliteHelper.MakeInParam("@sortnum",DbType.Int32,4,link.SortNum),
-								SqliteHelper.MakeInParam("@status",DbType.Int32,4,link.Status),
-								SqliteHelper.MakeInParam("@createtime",DbType.Date,8,link.CreateTime),
-                                SqliteHelper.MakeInParam("@linkid",DbType.Int32,4,link.LinkId),
+            SQLiteParameter[] prams = { 
+                                SQLiteHelper.MakeInParam("@type",DbType.Int32,4,link.Type),
+								SQLiteHelper.MakeInParam("@linkname",DbType.String,100,link.LinkName),
+                                SQLiteHelper.MakeInParam("@linkurl",DbType.String,255,link.LinkUrl),
+                                SQLiteHelper.MakeInParam("@position",DbType.Int32,4,link.Position),
+                                SQLiteHelper.MakeInParam("@target",DbType.String,50,link.Target),
+								SQLiteHelper.MakeInParam("@description",DbType.String,255,link.Description),
+                                SQLiteHelper.MakeInParam("@sortnum",DbType.Int32,4,link.SortNum),
+								SQLiteHelper.MakeInParam("@status",DbType.Int32,4,link.Status),
+								SQLiteHelper.MakeInParam("@createtime",DbType.Date,8,link.CreateTime),
+                                SQLiteHelper.MakeInParam("@linkid",DbType.Int32,4,link.LinkId),
 							};
 
-            return Convert.ToInt32(SqliteHelper.ExecuteScalar(CommandType.Text, cmdText, prams));
+            return Convert.ToInt32(SQLiteHelper.ExecuteScalar(CommandType.Text, cmdText, prams));
         }
 
         public int DeleteLink(int linkId)
         {
             string cmdText = string.Format("delete from [{0}links] where [linkid] = @linkid",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-								SqliteHelper.MakeInParam("@linkid",DbType.Int32,4,linkId)
+            SQLiteParameter[] prams = { 
+								SQLiteHelper.MakeInParam("@linkid",DbType.Int32,4,linkId)
 							};
-            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
 
 
         }
@@ -86,17 +87,17 @@ namespace Jqpress.Blog.Data.Sqlite
 
             string cmdText = string.Format("select * from [{0}links]  order by [sortnum] asc,[linkid] asc",ConfigHelper.Tableprefix);
 
-            return DataReaderToListLink(SqliteHelper.ExecuteReader(cmdText));
+            return DataReaderToListLink(SQLiteHelper.ExecuteReader(cmdText));
 
         }
 
         /// <summary>
         /// 转换实体
         /// </summary>
-        /// <param LinkName="read">SqliteDataReader</param>
+        /// <param LinkName="read">SQLiteDataReader</param>
         /// <param name="read"></param>
         /// <returns>LinkInfo</returns>
-        private static List<LinkInfo> DataReaderToListLink(SqliteDataReader read)
+        private static List<LinkInfo> DataReaderToListLink(SQLiteDataReader read)
         {
             var list = new List<LinkInfo>();
             while (read.Read())

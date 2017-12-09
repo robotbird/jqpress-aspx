@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using Jqpress.Blog.Entity;
 using Mono.Data.Sqlite;
+using System.Data.SQLite;
 using System.Data;
-using Jqpress.Framework.DbProvider.Sqlite;
+using Jqpress.Framework.DbProvider.SQLite;
 using Jqpress.Framework.Configuration;
 using Jqpress.Blog.Entity.Enum;
 
-namespace Jqpress.Blog.Data.Sqlite
+namespace Jqpress.Blog.Data.SQLite
 {
     public partial class DataProvider
     {
@@ -21,7 +22,7 @@ namespace Jqpress.Blog.Data.Sqlite
             while (true)
             {
                 string cmdText = cate.TagId == 0 ? string.Format("select count(1) from [{2}category] where [Slug]='{0}' and [type]={1}", cate.Slug, (int)CategoryType.Tag,ConfigHelper.Tableprefix) : string.Format("select count(1) from [{3}category] where [Slug]='{0}'  and [type]={1} and [categoryid]<>{2}", cate.Slug, (int)CategoryType.Tag, cate.TagId, ConfigHelper.Tableprefix);
-                int r = Convert.ToInt32(SqliteHelper.ExecuteScalar(cmdText));
+                int r = Convert.ToInt32(SQLiteHelper.ExecuteScalar(cmdText));
                 if (r == 0)
                 {
                     return;
@@ -42,19 +43,19 @@ namespace Jqpress.Blog.Data.Sqlite
                             (
                             @Type,@ParentId,@CateName,@Slug,@Description,@SortNum,@PostCount,@CreateTime
                             )", ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-                                SqliteHelper.MakeInParam("@Type",DbType.Int32,1,(int)CategoryType.Tag),
-                                SqliteHelper.MakeInParam("@ParentId",DbType.Int32,4,0),
-								SqliteHelper.MakeInParam("@CateName",DbType.String,255,tag.CateName),
-                                SqliteHelper.MakeInParam("@Slug",DbType.String,255,tag.Slug),
-								SqliteHelper.MakeInParam("@Description",DbType.String,255,tag.Description),
-                                SqliteHelper.MakeInParam("@SortNum",DbType.Int32,4,tag.SortNum),
-								SqliteHelper.MakeInParam("@PostCount",DbType.Int32,4,tag.PostCount),
-								SqliteHelper.MakeInParam("@CreateTime",DbType.Date,8,tag.CreateTime)
+            SQLiteParameter[] prams = { 
+                                SQLiteHelper.MakeInParam("@Type",DbType.Int32,1,(int)CategoryType.Tag),
+                                SQLiteHelper.MakeInParam("@ParentId",DbType.Int32,4,0),
+								SQLiteHelper.MakeInParam("@CateName",DbType.String,255,tag.CateName),
+                                SQLiteHelper.MakeInParam("@Slug",DbType.String,255,tag.Slug),
+								SQLiteHelper.MakeInParam("@Description",DbType.String,255,tag.Description),
+                                SQLiteHelper.MakeInParam("@SortNum",DbType.Int32,4,tag.SortNum),
+								SQLiteHelper.MakeInParam("@PostCount",DbType.Int32,4,tag.PostCount),
+								SQLiteHelper.MakeInParam("@CreateTime",DbType.Date,8,tag.CreateTime)
 							};
-            SqliteHelper.ExecuteScalar(CommandType.Text, cmdText, prams);
+            SQLiteHelper.ExecuteScalar(CommandType.Text, cmdText, prams);
 
-            int newId = Convert.ToInt32(SqliteHelper.ExecuteScalar(string.Format("select [categoryid] from [{0}category] order by [categoryid] desc limit 1",ConfigHelper.Tableprefix)));
+            int newId = Convert.ToInt32(SQLiteHelper.ExecuteScalar(string.Format("select [categoryid] from [{0}category] order by [categoryid] desc limit 1",ConfigHelper.Tableprefix)));
 
             return newId;
         }
@@ -72,26 +73,26 @@ namespace Jqpress.Blog.Data.Sqlite
                                 [PostCount]=@PostCount,
                                 [CreateTime]=@CreateTime
                                 where categoryid=@categoryid",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-                                SqliteHelper.MakeInParam("@Type",DbType.Int32,1,(int)CategoryType.Tag),
-								SqliteHelper.MakeInParam("@CateName",DbType.String,255,tag.CateName),
-                                SqliteHelper.MakeInParam("@Slug",DbType.String,255,tag.Slug),
-								SqliteHelper.MakeInParam("@Description",DbType.String,255,tag.Description),
-                                SqliteHelper.MakeInParam("@SortNum",DbType.Int32,4,tag.SortNum),
-								SqliteHelper.MakeInParam("@PostCount",DbType.Int32,4,tag.PostCount),
-								SqliteHelper.MakeInParam("@CreateTime",DbType.Date,8,tag.CreateTime),
-                                SqliteHelper.MakeInParam("@categoryid",DbType.Int32,1,tag.TagId),
+            SQLiteParameter[] prams = { 
+                                SQLiteHelper.MakeInParam("@Type",DbType.Int32,1,(int)CategoryType.Tag),
+								SQLiteHelper.MakeInParam("@CateName",DbType.String,255,tag.CateName),
+                                SQLiteHelper.MakeInParam("@Slug",DbType.String,255,tag.Slug),
+								SQLiteHelper.MakeInParam("@Description",DbType.String,255,tag.Description),
+                                SQLiteHelper.MakeInParam("@SortNum",DbType.Int32,4,tag.SortNum),
+								SQLiteHelper.MakeInParam("@PostCount",DbType.Int32,4,tag.PostCount),
+								SQLiteHelper.MakeInParam("@CreateTime",DbType.Date,8,tag.CreateTime),
+                                SQLiteHelper.MakeInParam("@categoryid",DbType.Int32,1,tag.TagId),
 							};
-            return Convert.ToInt32(SqliteHelper.ExecuteScalar(CommandType.Text, cmdText, prams));
+            return Convert.ToInt32(SQLiteHelper.ExecuteScalar(CommandType.Text, cmdText, prams));
         }
 
         public int DeleteTag(int tagId)
         {
             string cmdText = string.Format("delete from [{0}category] where [categoryid] = @categoryid",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-								SqliteHelper.MakeInParam("@categoryid",DbType.Int32,4,tagId)
+            SQLiteParameter[] prams = { 
+								SQLiteHelper.MakeInParam("@categoryid",DbType.Int32,4,tagId)
 							};
-            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
+            return SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams);
 
 
         }
@@ -99,11 +100,11 @@ namespace Jqpress.Blog.Data.Sqlite
         public TagInfo GetTag(int tagId)
         {
             string cmdText = string.Format("select * from [{0}category] where [categoryid] = @categoryid",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = { 
-								SqliteHelper.MakeInParam("@categoryid",DbType.Int32,4,tagId)
+            SQLiteParameter[] prams = { 
+								SQLiteHelper.MakeInParam("@categoryid",DbType.Int32,4,tagId)
 							};
 
-            List<TagInfo> list = DataReaderToListTag(SqliteHelper.ExecuteReader(CommandType.Text, cmdText, prams));
+            List<TagInfo> list = DataReaderToListTag(SQLiteHelper.ExecuteReader(CommandType.Text, cmdText, prams));
             return list.Count > 0 ? list[0] : null;
         }
 
@@ -114,7 +115,7 @@ namespace Jqpress.Blog.Data.Sqlite
 
             string cmdText = string.Format("select * from [{0}category] where " + condition + "  order by [SortNum] asc ,[categoryid] asc",ConfigHelper.Tableprefix);
 
-            return DataReaderToListTag(SqliteHelper.ExecuteReader(cmdText));
+            return DataReaderToListTag(SQLiteHelper.ExecuteReader(cmdText));
 
         }
 
@@ -129,16 +130,16 @@ namespace Jqpress.Blog.Data.Sqlite
 
             //  throw new Exception(cmdText);
 
-            return DataReaderToListTag(SqliteHelper.ExecuteReader(cmdText));
+            return DataReaderToListTag(SQLiteHelper.ExecuteReader(cmdText));
         }
 
         /// <summary>
         /// 转换实体
         /// </summary>
-        /// <param CateName="read">SqliteDataReader</param>
+        /// <param CateName="read">SQLiteDataReader</param>
         /// <param name="read"></param>
         /// <returns>TagInfo</returns>
-        private static List<TagInfo> DataReaderToListTag(SqliteDataReader read)
+        private static List<TagInfo> DataReaderToListTag(SQLiteDataReader read)
         {
             var list = new List<TagInfo>();
             while (read.Read())

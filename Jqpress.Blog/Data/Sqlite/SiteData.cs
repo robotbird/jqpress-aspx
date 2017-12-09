@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using Jqpress.Blog.Entity;
-using Mono.Data.Sqlite;
+//using Mono.Data.Sqlite;
+using System.Data.SQLite;
 using System.Data;
-using Jqpress.Framework.DbProvider.Sqlite;
+using Jqpress.Framework.DbProvider.SQLite;
 using Jqpress.Framework.Configuration;
-namespace Jqpress.Blog.Data.Sqlite
+namespace Jqpress.Blog.Data.SQLite
 {
     public partial class DataProvider
     {
         public bool UpdateStatistics(StatisticsInfo statistics)
         {
             string cmdText =string.Format( "update [{0}sites] set PostCount=@PostCount,CommentCount=@CommentCount,VisitCount=@VisitCount,TagCount=@TagCount",ConfigHelper.Tableprefix);
-            SqliteParameter[] prams = {
-					                        SqliteHelper.MakeInParam("@PostCount", DbType.Int32,4,statistics.PostCount),
-					                        SqliteHelper.MakeInParam("@CommentCount", DbType.Int32,4,statistics.CommentCount),
-					                        SqliteHelper.MakeInParam("@VisitCount", DbType.Int32,4,statistics.VisitCount),
-					                        SqliteHelper.MakeInParam("@TagCount", DbType.Int32,4,statistics.TagCount),
+            SQLiteParameter[] prams = {
+					                        SQLiteHelper.MakeInParam("@PostCount", DbType.Int32,4,statistics.PostCount),
+					                        SQLiteHelper.MakeInParam("@CommentCount", DbType.Int32,4,statistics.CommentCount),
+					                        SQLiteHelper.MakeInParam("@VisitCount", DbType.Int32,4,statistics.VisitCount),
+					                        SQLiteHelper.MakeInParam("@TagCount", DbType.Int32,4,statistics.TagCount),
                                         };
 
-            return SqliteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams) == 1;
+            return SQLiteHelper.ExecuteNonQuery(CommandType.Text, cmdText, prams) == 1;
         }
 
         public StatisticsInfo GetStatistics()
@@ -28,22 +29,22 @@ namespace Jqpress.Blog.Data.Sqlite
 
             string insertText = string.Format("insert into [{0}sites] ([PostCount],[CommentCount],[VisitCount],[TagCount]) values ( '0','0','0','0')", ConfigHelper.Tableprefix);
 
-            List<StatisticsInfo> list = DataReaderToListSite(SqliteHelper.ExecuteReader(cmdText));
+            List<StatisticsInfo> list = DataReaderToListSite(SQLiteHelper.ExecuteReader(cmdText));
 
             if (list.Count == 0)
             {
-                SqliteHelper.ExecuteNonQuery(insertText);
+                SQLiteHelper.ExecuteNonQuery(insertText);
             }
-            list = DataReaderToListSite(SqliteHelper.ExecuteReader(cmdText));
+            list = DataReaderToListSite(SQLiteHelper.ExecuteReader(cmdText));
 
             return list.Count > 0 ? list[0] : null;
         }
         /// <summary>
         /// 转换实体
         /// </summary>
-        /// <param name="read">SqliteDataReader</param>
+        /// <param name="read">SQLiteDataReader</param>
         /// <returns>TermInfo</returns>
-        private static List<StatisticsInfo> DataReaderToListSite(SqliteDataReader read)
+        private static List<StatisticsInfo> DataReaderToListSite(SQLiteDataReader read)
         {
             var list = new List<StatisticsInfo>();
             while (read.Read())
